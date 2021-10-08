@@ -3,9 +3,12 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
+    public Scanner sc = new Scanner(System.in);
     public static void main(String[] args) throws IOException {
-        Main.logo();
-        Main.page_accueil();
+        Main main = new Main();
+        main.logo();
+        main.page_accueil();
+        main.sc.close();
     }
 
     public static void logo() {
@@ -22,34 +25,36 @@ public class Main {
                 " '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' ");
     }
 
-    public static void page_accueil() throws IOException {
+    public int choix() {
         System.out.println("\t 1 - Inscription");
         System.out.println("\t 2 - Connexion");
-        Scanner sc =  new Scanner(System.in);
-        String choix = sc.nextLine();
-        sc.close();
-        if (choix.equals("1")) {
-            Main.incription();
-        } else if (choix.equals("2")) {
-            Main.connexion();
-        } else {
-            System.out.println("Choix Impossible");
-            Main.page_accueil();
+        int choix = Integer.parseInt(this.sc.nextLine());
+        return choix;
+    }
+    public void page_accueil() throws IOException {
+        int choix = choix();
+        while (choix != 1 && choix != 2) {
+            choix = choix();
+        }
+        switch (choix) {
+            case 1 -> incription();
+            case 2 -> connexion();
         }
     }
 
-    public static void incription() {
-        Scanner sc =  new Scanner(System.in);
+    public void incription() {
         System.out.println("Nom : ");
-        String nom_client = sc.nextLine();
-        System.out.println("Mot de passe : ");
-        String mdp_client = sc.nextLine();
+        String nom_client = this.sc.nextLine();
 
-        Client client = new Client(nom_client, mdp_client);
+        Client client = new Client(nom_client);
     }
 
-    public static void connexion() {
-        System.out.println("connexion");
+    public void connexion() {
+        System.out.println("Numéro client : ");
+        int numero_client = Integer.parseInt(this.sc.nextLine());
 
+        Client client = Client.get_client_by_id(numero_client);
+        if (client == null) System.out.println("Numéro de client invalide");
+        else System.out.println("Bonjour " + client.getNom());
     }
 }

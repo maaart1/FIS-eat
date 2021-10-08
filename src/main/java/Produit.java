@@ -1,7 +1,7 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public class Produit {
     private String nom;
-    private ArrayList<Ingredient> ingredients;
+    private List<Ingredient> ingredients;
     private boolean hors_menu;
 }
