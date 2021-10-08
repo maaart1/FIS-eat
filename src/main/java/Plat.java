@@ -1,2 +1,2 @@
-public class Plat {
+public class Plat extends Produit {
 }

@@ -1,2 +1,2 @@
-public class Accompagnement {
+public class Accompagnement extends Produit {
 }
