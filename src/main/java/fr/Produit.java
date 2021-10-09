@@ -1,3 +1,5 @@
+package fr;
+
 import java.util.List;
 
 public class Produit {

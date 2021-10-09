@@ -1,3 +1,5 @@
+package fr;
+
 public enum Ingredient {
     ;
 

@@ -1,16 +1,10 @@
-import java.io.Console;
-import java.io.IOException;
+package util;
+
 import java.util.Scanner;
+import fr.Client;
 
-public class Main {
+public class MenuLayouts {
     public Scanner sc = new Scanner(System.in);
-    public static void main(String[] args) throws IOException {
-        Main main = new Main();
-        main.logo();
-        main.page_accueil();
-        main.sc.close();
-    }
-
     public static void logo() {
         System.out.println(" .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------. \n" +
                 "| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |\n" +
@@ -26,35 +20,66 @@ public class Main {
     }
 
     public int choix() {
+        this.logo();
         System.out.println("\t 1 - Inscription");
         System.out.println("\t 2 - Connexion");
+        System.out.print("Choix ? ");
         int choix = Integer.parseInt(this.sc.nextLine());
         return choix;
     }
-    public void page_accueil() throws IOException {
-        int choix = choix();
+
+    public void page_accueil() {
+        int choix = this.choix();
         while (choix != 1 && choix != 2) {
             choix = choix();
         }
         switch (choix) {
-            case 1 -> incription();
-            case 2 -> connexion();
+            case 1 -> this.incription();
+            case 2 -> this.connexion();
         }
     }
 
     public void incription() {
-        System.out.println("Nom : ");
+        MenuLayouts.clear_screen();
+        System.out.print("Nom : ");
         String nom_client = this.sc.nextLine();
 
         Client client = new Client(nom_client);
+        client.sauvegarder_client();
+        System.out.println("Votre numéro client est : " + client.get_numero_client());
+        System.out.println("Appuyer sur entrée pour continuer ! ");
+        this.sc.nextLine();
+        this.page_accueil();
     }
 
     public void connexion() {
-        System.out.println("Numéro client : ");
+        MenuLayouts.clear_screen();
+        System.out.print("Numéro client : ");
         int numero_client = Integer.parseInt(this.sc.nextLine());
+        if (!Client.exist(numero_client)) {
+            System.out.println("Numéro de client invalide !");
+            System.out.println("Appuyer sur entrée pour continuer ! ");
+            this.sc.nextLine();
+            this.page_accueil();
+        }
+        else {
+            Client client = Client.get_client_by_id(numero_client);
+            System.out.println("Bonjour " + client.get_nom() + " :)");
+            this.menu();
+        }
+    }
 
-        Client client = Client.get_client_by_id(numero_client);
-        if (client == null) System.out.println("Numéro de client invalide");
-        else System.out.println("Bonjour " + client.getNom());
+    public static void clear_screen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
+    public void menu() {
+        System.out.println("\t 1 - Passer une commande");
+        System.out.println("\t 2 - Historique des commandes");
+        System.out.println("\t 3 - Quitter");
+        System.out.print("Choix ? ");
+        int choix = Integer.parseInt(this.sc.nextLine());
+
     }
 }

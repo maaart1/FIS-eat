@@ -1,15 +1,17 @@
+package fr;
+
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Client implements Serializable {
-    public static int cpt = 1;
-    private String nom;
-    private int numero_client = cpt;
+    @Serial
+    private static final long serialVersionUID = -3822866514056828473L;
 
+    private String nom;
+    private int numero_client;
     public Client(String nom) {
         this.nom = nom;
-        cpt++;
+        this.numero_client = this.get_nombres_clients(System.getProperty("user.dir") + "/bdd/client/");
     }
 
     public boolean existe() {
@@ -21,7 +23,7 @@ public class Client implements Serializable {
                 objectInputStream.close();
 
                 for (Client c : clients) {
-                    if (this.getNumero_client() == c.getNumero_client()) return false;
+                    if (this.get_numero_client() == c.get_numero_client()) return false;
                 }
 
             } catch (FileNotFoundException e) {
@@ -43,7 +45,7 @@ public class Client implements Serializable {
             objectInputStream.close();
 
             for (Client c: clients) {
-                if (numero_client == c.getNumero_client()) return c;
+                if (numero_client == c.get_numero_client()) return c;
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -56,7 +58,7 @@ public class Client implements Serializable {
     }
 
     /*public void sauvegarder_client() {
-        ArrayList<Client> clients = new ArrayList<Client>();
+        ArrayList<fr.Client> clients = new ArrayList<fr.Client>();
         clients.add(this);
         File fichier_client = new File(System.getProperty("user.dir") + "/bdd/fichier_client.txt");
         System.out.println(fichier_client.getPath());
@@ -73,10 +75,8 @@ public class Client implements Serializable {
     }*/
 
     public void sauvegarder_client() {
-
-        FileOutputStream fileOutputStream = null;
         try {
-            fileOutputStream = new FileOutputStream( System.getProperty("user.dir") + "/bdd/client/" + this.numero_client + ".ser");
+            FileOutputStream fileOutputStream = new FileOutputStream( System.getProperty("user.dir") + "/bdd/client/" + this.numero_client + ".ser");
             ObjectOutput objectOutput = new ObjectOutputStream(fileOutputStream);
             objectOutput.writeObject(this);
         } catch (FileNotFoundException e) {
@@ -88,9 +88,9 @@ public class Client implements Serializable {
 
     public static Client get_client_by_id(int numero_client) {
         File file = new File(System.getProperty("user.dir") + "/bdd/client/" + numero_client + ".ser");
-        FileInputStream fileInputStream = null;
+        System.out.println(file.getPath());
         try {
-            fileInputStream = new FileInputStream(file);
+            FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInput objectInput = new ObjectInputStream(fileInputStream);
             return (Client) objectInput.readObject();
         } catch (FileNotFoundException e) {
@@ -103,11 +103,25 @@ public class Client implements Serializable {
         return null;
     }
 
-    public String getNom() {
-        return nom;
+    public static boolean exist(int numero_client) {
+        File file = new File(System.getProperty("user.dir") + "/bdd/client/" + numero_client + ".ser");
+        //return file.exists() ? true : false;
+        if (file.exists()) return true;
+        else return false;
     }
 
-    public int getNumero_client() {
-        return numero_client;
+
+    public int get_nombres_clients(String path) {
+        File directory = new File(path);
+        File[] content_files = directory.listFiles();
+        return content_files.length == 0 ? 0 : content_files.length + 1;
+    }
+
+    public String get_nom() {
+        return this.nom;
+    }
+
+    public int get_numero_client() {
+        return this.numero_client;
     }
 }
