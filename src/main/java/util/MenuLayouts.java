@@ -123,12 +123,11 @@ public class MenuLayouts {
     }
 
     public void afficher_plats() {
-        File directory = new File(System.getProperty("user.dir") + "/bdd/produits/plats/");
-        File[] content_files = directory.listFiles();
-        if (Produit.exist("plats", 1)) {
-            System.out.println("je suis la");
-            System.out.println(Plat.get_produit_by_id("plats", 1));
-        }
+        /*File directory = new File(System.getProperty("user.dir") + "/bdd/produits/plats/");
+        File[] content_files = directory.listFiles();*/
+        Plat p = Plat.get_produit_by_id(1);
+        System.out.println(p.getNom());
+
         /*for (int i = 0; i < content_files.length; i++) {
             System.out.println(Produit.get_produit_by_id("plats", ++i));
         }*/

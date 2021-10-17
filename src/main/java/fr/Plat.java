@@ -28,8 +28,8 @@ public class Plat extends Produit implements Serializable {
         }
     }
 
-    public static Plat get_produit_by_id(String path, int numero_produit) {
-        File file = new File(System.getProperty("user.dir") + "/bdd/produits/" + path + "/" + numero_produit + ".ser");
+    public static Plat get_produit_by_id(int numero_produit) {
+        File file = new File(System.getProperty("user.dir") + "/bdd/produits/plats/" + numero_produit + ".ser");
         System.out.println(file.getPath());
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -45,8 +45,8 @@ public class Plat extends Produit implements Serializable {
         return null;
     }
 
-    /*public static void main(String[] args) {
-        Plat p = new Plat("Burger classique", new ArrayList<>(){
+    public static void main(String[] args) {
+        /*Plat p = new Plat("Burger classique", new ArrayList<>(){
             {
                 add(new Ingredient("Pain burger", true, "Au grill", 10));
                 add(new Ingredient("Steak", true, "Au grill", 20));
@@ -56,6 +56,6 @@ public class Plat extends Produit implements Serializable {
                 add(new Ingredient("Ketchup", false, "", 3));
             }
         });
-        p.sauvegarder_produit();
-    }*/
+        p.sauvegarder_produit();*/
+    }
 }

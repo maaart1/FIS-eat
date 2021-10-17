@@ -1,7 +1,6 @@
 package fr;
 
 import java.io.*;
-import java.util.List;
 
 public class Client implements Serializable {
     @Serial

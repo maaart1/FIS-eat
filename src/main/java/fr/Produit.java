@@ -49,4 +49,28 @@ abstract public class Produit implements Serializable {
         File[] content_files = directory.listFiles();
         return content_files.length == 0 ? 1 : content_files.length + 1;
     }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public boolean isHors_menu() {
+        return hors_menu;
+    }
+
+    public void setHors_menu(boolean hors_menu) {
+        this.hors_menu = hors_menu;
+    }
 }
