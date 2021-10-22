@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Scanner;
 import fr.Client;
 import fr.Plat;
-import fr.Produit;
 
 public class MenuLayouts {
     public Scanner sc = new Scanner(System.in);
