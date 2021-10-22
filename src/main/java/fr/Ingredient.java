@@ -18,6 +18,7 @@ public class Ingredient implements Serializable {
         this.type_cuisson = type_cuisson;
         this.temps_preparation = temps_preparation;
         this.numero_ingredient = this.get_nombres_ingredients(System.getProperty("user.dir") + "/bdd/ingredients/");
+        // this.numero_ingredient = 1;
     }
 
     public void sauvegarder_ingredient() {
@@ -33,7 +34,7 @@ public class Ingredient implements Serializable {
     }
 
 
-    public Ingredient get_ingredient_by_id(int numero_ingredient)  {
+    public static Ingredient get_ingredient_by_id(int numero_ingredient)  {
         File file = new File(System.getProperty("user.dir") + "/bdd/ingredients/" + numero_ingredient + ".ser");
         System.out.println(file.getPath());
         try {
@@ -49,6 +50,11 @@ public class Ingredient implements Serializable {
         }
         return null;
     }
+
+    /*public static void main(String[] args) {
+        Ingredient i = new Ingredient("Ketchup", false, "", 3);
+        i.sauvegarder_ingredient();
+    }*/
 
     public int get_nombres_ingredients(String path) {
         File directory = new File(path);
@@ -74,5 +80,10 @@ public class Ingredient implements Serializable {
 
     public int getTemps_preparation() {
         return temps_preparation;
+    }
+
+    @Override
+    public String toString() {
+        return this.nom;
     }
 }

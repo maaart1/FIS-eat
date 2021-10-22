@@ -26,4 +26,18 @@ public class Boisson extends Produit implements Serializable {
             e.printStackTrace();
         }
     }
+
+    public static Boisson get_boisson_by_id(int numero_boisson) {
+        File file = new File(System.getProperty("user.dir") + "/bdd/produits/boissons/" + numero_boisson + ".ser");
+        System.out.println(file.getPath());
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInput objectInput = new ObjectInputStream(fileInputStream);
+            return (Boisson) objectInput.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

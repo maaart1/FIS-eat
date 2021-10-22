@@ -4,18 +4,24 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Plat extends Produit implements Serializable {
+public class Plat implements Serializable {
     @Serial
     private static final long serialVersionUID = -2203171846142637339L;
 
+    private String nom;
+    private List<Ingredient> ingredients;
     private int numero_plat;
+    private boolean hors_menu;
+    private double prix;
 
-    public Plat(String nom, List<Ingredient> ingredients) {
-        super(nom, ingredients);
-        this.numero_plat = this.get_nombres_produits(System.getProperty("user.dir") + "/bdd/produits/plats/");
+    public Plat(String nom, List<Ingredient> ingredients, boolean hors_menu, double prix) {
+        this.nom = nom;
+        this.ingredients = ingredients;
+        this.numero_plat = Plat.get_nombres_plats();
+        this.hors_menu = hors_menu;
+        this.prix = prix;
     }
 
-    @Override
     public void sauvegarder_produit() {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream( System.getProperty("user.dir") + "/bdd/produits/plats/" + this.numero_plat + ".ser");
@@ -30,30 +36,59 @@ public class Plat extends Produit implements Serializable {
 
     public static Plat get_produit_by_id(int numero_produit) {
         File file = new File(System.getProperty("user.dir") + "/bdd/produits/plats/" + numero_produit + ".ser");
-        System.out.println(file.getPath());
-        if (file.exists()) System.out.println("exist");
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInput objectInput = new ObjectInputStream(fileInputStream);
-            System.out.println(file);
             return (Plat) objectInput.readObject();
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
         return null;
     }
+    public String getNom() {
+        return nom;
+    }
 
-    /*public static void main(String[] args) {
+    public static int get_nombres_plats() {
+        File directory = new File(System.getProperty("user.dir") + "/bdd/produits/plats/");
+        File[] content_files = directory.listFiles();
+        return content_files.length == 0 ? 1 : content_files.length + 1;
+    }
+
+
+    public static void main(String[] args) {
         Plat p = new Plat("Burger classique", new ArrayList<>(){
             {
-                add(new Ingredient("Pain burger", true, "Au grill", 10));
-                add(new Ingredient("Steak", true, "Au grill", 20));
-                add(new Ingredient("Salade", false, "", 5));
-                add(new Ingredient("Tomate", false, "", 5));
-                add(new Ingredient("Oignons", false, "", 5));
-                add(new Ingredient("Ketchup", false, "", 3));
+                add(Ingredient.get_ingredient_by_id(1));
+                add(Ingredient.get_ingredient_by_id(2));
+                add(Ingredient.get_ingredient_by_id(3));
+                add(Ingredient.get_ingredient_by_id(4));
+                add(Ingredient.get_ingredient_by_id(5));
+                add(Ingredient.get_ingredient_by_id(6));
             }
-        });
+        }, true, 12.50);
         p.sauvegarder_produit();
-    }*/
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder =  new StringBuilder();
+        stringBuilder.append(this.numero_plat + " : " + this.nom + " (" + this.prix + ") : ");
+        for (Ingredient ingredient : this.ingredients) {
+            stringBuilder.append(ingredient + " ");
+        }
+        return stringBuilder.toString();
+    }
 }

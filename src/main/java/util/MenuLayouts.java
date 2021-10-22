@@ -2,7 +2,10 @@ package util;
 
 import java.io.File;
 import java.util.Scanner;
+
+import fr.Boisson;
 import fr.Client;
+import fr.Commande;
 import fr.Plat;
 
 public class MenuLayouts {
@@ -24,6 +27,7 @@ public class MenuLayouts {
     public int choix_accueil() {
         System.out.println("\t 1 - Inscription");
         System.out.println("\t 2 - Connexion");
+        System.out.println("\t 3 - Connexion en invité");
         System.out.print("Choix ? ");
         String choix = this.sc.nextLine();
         return verification_choix(choix);
@@ -31,13 +35,19 @@ public class MenuLayouts {
 
     public void page_accueil() {
         int choix = this.choix_accueil();
-        while (choix != 1 && choix != 2) {
+        while (choix != 1 && choix != 2 && choix != 3) {
             choix = choix_accueil();
         }
         switch (choix) {
             case 1 -> this.incription();
             case 2 -> this.connexion();
+            case 3 -> this.connexion_invite();
         }
+    }
+
+    public void connexion_invite() {
+        System.out.println("Bonjour invité :)");
+        this.menu();
     }
 
     public void incription() {
@@ -75,17 +85,6 @@ public class MenuLayouts {
         System.out.flush();
     }
 
-    public void choix_menu() {
-        int choix = verification_choix(this.sc.nextLine());
-        switch (choix) {
-            case 1 -> passer_commande();
-            case 2 -> historique_commandes();
-            case 3 -> quitter();
-
-        }
-    }
-
-
     public int verification_choix(String choix) {
         if (choix.length() > 1) return 0;
         else {
@@ -103,8 +102,13 @@ public class MenuLayouts {
         System.out.println("\t 2 - Historique des commandes");
         System.out.println("\t 3 - Quitter");
         System.out.print("Choix ? ");
-        choix_menu();
+        int choix = verification_choix(this.sc.nextLine());
+        switch (choix) {
+            case 1 -> passer_commande();
+            case 2 -> historique_commandes();
+            case 3 -> quitter();
 
+        }
     }
 
     public void quitter() {
@@ -117,19 +121,25 @@ public class MenuLayouts {
     }
 
     public void passer_commande() {
+        Commande commande = new Commande();
         System.out.println("Passer commande : ");
-        this.afficher_plats();
-    }
+        // Choix menu ou hors menu
+        System.out.println("\t 1 - Commande en menu");
+        System.out.println("\t 2 - Commande en hors menu");
+        System.out.print("Choix ? ");
+        int choix = verification_choix(this.sc.nextLine());
+        switch (choix) {
+            case 1 -> {
+                int nombres_plats = Plat.get_nombres_plats();
+                for (int i = 1; i <= nombres_plats - 1; i++) {
+                    Plat p = Plat.get_produit_by_id(i);
+                    System.out.println(p);
+                }
+                System.out.println("Choisir un plat : ");
+                System.out.print("Choix ? ");
+            }
+        }
 
-    public void afficher_plats() {
-        /*File directory = new File(System.getProperty("user.dir") + "/bdd/produits/plats/");
-        File[] content_files = directory.listFiles();*/
-        Plat p = Plat.get_produit_by_id(1);
-        System.out.println(p.getNom());
-
-        /*for (int i = 0; i < content_files.length; i++) {
-            System.out.println(Produit.get_produit_by_id("plats", ++i));
-        }*/
     }
 
     public void afficher_boissons() {

@@ -7,6 +7,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
         MenuLayouts menu = new MenuLayouts();
+        System.out.println("\u001B[1m I am bold");
         menu.logo();
         menu.page_accueil();
         menu.sc.close();
