@@ -1,19 +1,50 @@
 package fr;
 
-import java.io.Serial;
-import java.io.Serializable;
+import java.io.*;
 import java.util.List;
 
-public class Accompagnement extends Produit implements Serializable {
+public class Accompagnement implements Serializable {
     @Serial
     private static final long serialVersionUID = 7072625591871715646L;
+    private String nom;
+    private int numero_accompagnement;
+    private boolean hors_menu;
+    private double prix;
 
-    public Accompagnement(String nom, List<Ingredient> ingredients) {
-        super(nom, ingredients);
+    public Accompagnement(String nom, double prix) {
+        this.nom = nom;
+        this.prix = prix;
+        this.numero_accompagnement = Boisson.get_nombres_boissons();
     }
 
-    @Override
-    public void sauvegarder_produit() {
+    public void sauvegarder_accompagnement() {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream( System.getProperty("user.dir") + "/bdd/produits/accompagnements/" + this.numero_accompagnement + ".ser");
+            ObjectOutput objectOutput = new ObjectOutputStream(fileOutputStream);
+            objectOutput.writeObject(this);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public static Accompagnement get_accompagnement_by_id(int numero_accompagnement) {
+        File file = new File(System.getProperty("user.dir") + "/bdd/produits/accompagnements/" + numero_accompagnement + ".ser");
+        System.out.println(file.getPath());
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInput objectInput = new ObjectInputStream(fileInputStream);
+            return (Accompagnement) objectInput.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static int get_nombres_accompagnements() {
+        File directory = new File(System.getProperty("user.dir") + "/bdd/produits/accompagnements/");
+        File[] content_files = directory.listFiles();
+        return content_files.length == 0 ? 1 : content_files.length + 1;
     }
 }

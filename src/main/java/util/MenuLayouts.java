@@ -47,7 +47,7 @@ public class MenuLayouts {
 
     public void connexion_invite() {
         System.out.println("Bonjour invité :)");
-        this.menu();
+        this.menu(new Client("Invité"));
     }
 
     public void incription() {
@@ -76,7 +76,7 @@ public class MenuLayouts {
         else {
             Client client = Client.get_client_by_id(numero_client);
             System.out.println("Bonjour " + client.get_nom() + " :)");
-            this.menu();
+            this.menu(client);
         }
     }
 
@@ -97,14 +97,14 @@ public class MenuLayouts {
         return Integer.parseInt(choix);
     }
 
-    public void menu() {
+    public void menu(Client client) {
         System.out.println("\t 1 - Passer une commande");
         System.out.println("\t 2 - Historique des commandes");
         System.out.println("\t 3 - Quitter");
         System.out.print("Choix ? ");
         int choix = verification_choix(this.sc.nextLine());
         switch (choix) {
-            case 1 -> passer_commande();
+            case 1 -> passer_commande(client);
             case 2 -> historique_commandes();
             case 3 -> quitter();
 
@@ -120,8 +120,8 @@ public class MenuLayouts {
         System.out.println("Historique de vos commandes : ");
     }
 
-    public void passer_commande() {
-        Commande commande = new Commande();
+    public void passer_commande(Client client) {
+        Commande commande = new Commande(client.get_numero_client());
         System.out.println("Passer commande : ");
         // Choix menu ou hors menu
         System.out.println("\t 1 - Commande en menu");
@@ -130,12 +130,12 @@ public class MenuLayouts {
         int choix = verification_choix(this.sc.nextLine());
         switch (choix) {
             case 1 -> {
+                System.out.println("Choisir un plat : ");
                 int nombres_plats = Plat.get_nombres_plats();
                 for (int i = 1; i <= nombres_plats - 1; i++) {
-                    Plat p = Plat.get_produit_by_id(i);
+                    Plat p = Plat.get_plat_by_id(i);
                     System.out.println(p);
                 }
-                System.out.println("Choisir un plat : ");
                 System.out.print("Choix ? ");
             }
         }

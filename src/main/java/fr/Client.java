@@ -1,6 +1,8 @@
 package fr;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Client implements Serializable {
     @Serial
@@ -8,10 +10,12 @@ public class Client implements Serializable {
 
     private String nom;
     private int numero_client;
+    private List<Commande> list_commandes;
 
     public Client(String nom) {
         this.nom = nom;
-        this.numero_client = this.get_nombres_clients(System.getProperty("user.dir") + "/bdd/clients/");
+        this.list_commandes = new ArrayList<>();
+        this.numero_client = Client.get_nombres_clients();
     }
 
     public void sauvegarder_client() {
@@ -19,8 +23,6 @@ public class Client implements Serializable {
             FileOutputStream fileOutputStream = new FileOutputStream( System.getProperty("user.dir") + "/bdd/clients/" + this.numero_client + ".ser");
             ObjectOutput objectOutput = new ObjectOutputStream(fileOutputStream);
             objectOutput.writeObject(this);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -33,11 +35,7 @@ public class Client implements Serializable {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInput objectInput = new ObjectInputStream(fileInputStream);
             return (Client) objectInput.readObject();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;
@@ -51,8 +49,8 @@ public class Client implements Serializable {
     }
 
 
-    public int get_nombres_clients(String path) {
-        File directory = new File(path);
+    public static int get_nombres_clients() {
+        File directory = new File(System.getProperty("user.dir") + "/bdd/clients/");
         File[] content_files = directory.listFiles();
         return content_files.length == 0 ? 1 : content_files.length + 1;
     }

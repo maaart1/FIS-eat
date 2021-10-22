@@ -22,7 +22,7 @@ public class Plat implements Serializable {
         this.prix = prix;
     }
 
-    public void sauvegarder_produit() {
+    public void sauvegarder_plat() {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream( System.getProperty("user.dir") + "/bdd/produits/plats/" + this.numero_plat + ".ser");
             ObjectOutput objectOutput = new ObjectOutputStream(fileOutputStream);
@@ -34,7 +34,7 @@ public class Plat implements Serializable {
         }
     }
 
-    public static Plat get_produit_by_id(int numero_produit) {
+    public static Plat get_plat_by_id(int numero_produit) {
         File file = new File(System.getProperty("user.dir") + "/bdd/produits/plats/" + numero_produit + ".ser");
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -67,7 +67,7 @@ public class Plat implements Serializable {
                 add(Ingredient.get_ingredient_by_id(6));
             }
         }, true, 12.50);
-        p.sauvegarder_produit();
+        p.sauvegarder_plat();
     }
 
     public void setNom(String nom) {
@@ -87,8 +87,9 @@ public class Plat implements Serializable {
         StringBuilder stringBuilder =  new StringBuilder();
         stringBuilder.append(this.numero_plat + " : " + this.nom + " (" + this.prix + ") : ");
         for (Ingredient ingredient : this.ingredients) {
-            stringBuilder.append(ingredient + " ");
+            stringBuilder.append(ingredient + ", ");
         }
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
         return stringBuilder.toString();
     }
 }

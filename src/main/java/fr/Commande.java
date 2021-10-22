@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class Commande {
     private int numero_commande;
-    private int numero_client;
     private Client client;
     private LocalDate date;
     private int prix;
@@ -15,8 +14,8 @@ public class Commande {
     private boolean en_preparation;
     private boolean prete;
 
-    public Commande() {
-
+    public Commande(Client client) {
+        this.client = client;
     }
 
     public int getNumero_commande() {
