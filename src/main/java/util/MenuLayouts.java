@@ -1,12 +1,10 @@
 package util;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-import fr.Boisson;
-import fr.Client;
-import fr.Commande;
-import fr.Plat;
+import fr.*;
 
 public class MenuLayouts {
     public Scanner sc = new Scanner(System.in);
@@ -46,7 +44,6 @@ public class MenuLayouts {
     }
 
     public void connexion_invite() {
-        System.out.println("Bonjour invité :)");
         this.menu(new Client("Invité"));
     }
 
@@ -75,7 +72,6 @@ public class MenuLayouts {
         }
         else {
             Client client = Client.get_client_by_id(numero_client);
-            System.out.println("Bonjour " + client.get_nom() + " :)");
             this.menu(client);
         }
     }
@@ -98,22 +94,25 @@ public class MenuLayouts {
     }
 
     public void menu(Client client) {
+        System.out.println("\t --------------------------------------------------------");
+        System.out.println("Bonjour " + client.get_nom() + " :)");
+        System.out.println(client.getHistorique_commandes(client));
         System.out.println("\t 1 - Passer une commande");
         System.out.println("\t 2 - Historique des commandes");
-        System.out.println("\t 3 - Quitter");
+        System.out.println("\t 3 - Déconnecter");
         System.out.print("Choix ? ");
         int choix = verification_choix(this.sc.nextLine());
         switch (choix) {
             case 1 -> passer_commande(client);
             case 2 -> historique_commandes();
-            case 3 -> quitter();
+            case 3 -> deconnecter();
 
         }
     }
 
-    public void quitter() {
+    public void deconnecter() {
         System.out.println("Merci de votre visite ;)");
-        System.exit(0);
+        this.page_accueil();
     }
 
     public void historique_commandes() {
@@ -121,22 +120,60 @@ public class MenuLayouts {
     }
 
     public void passer_commande(Client client) {
-        Commande commande = new Commande(client.get_numero_client());
+        Commande commande = new Commande(client);
+        System.out.println("\t --------------------------------------------------------");
         System.out.println("Passer commande : ");
         // Choix menu ou hors menu
-        System.out.println("\t 1 - Commande en menu");
-        System.out.println("\t 2 - Commande en hors menu");
+        System.out.println("\t 1 - Commander un menu");
+        System.out.println("\t 2 - Commander en hors menu");
+        System.out.println("\t 3 - Annuler");
         System.out.print("Choix ? ");
         int choix = verification_choix(this.sc.nextLine());
         switch (choix) {
             case 1 -> {
-                System.out.println("Choisir un plat : ");
-                int nombres_plats = Plat.get_nombres_plats();
-                for (int i = 1; i <= nombres_plats - 1; i++) {
-                    Plat p = Plat.get_plat_by_id(i);
-                    System.out.println(p);
-                }
+                System.out.println("\t --------------------------------------------------------");
+                System.out.println("\t 1 - ");
+                System.out.println("\t 2 - ");
+                System.out.println("\t 3 - ");
+                System.out.println("\t 4 - Commander un menu en choix libre (8.00 €)");
+                System.out.println("\t 5 - Annuler");
                 System.out.print("Choix ? ");
+                int next_choix = verification_choix(this.sc.nextLine());
+                switch (next_choix) {
+                    case 4 -> {
+                        System.out.println("Choisir un plat :");
+                        int nombres_plats = Plat.get_nombres_plats();
+                        for (int i = 1; i <= nombres_plats - 1; i++) {
+                            Plat p = Plat.get_plat_by_id(i);
+                            System.out.println(p);
+                        }
+                        System.out.print("Choix ? ");
+                        int next_next_choix = verification_choix(this.sc.nextLine());
+
+                    }
+                    case 5 -> {
+                        this.menu(client);
+                    }
+                    default -> {
+                        System.out.println("Erreur de saisie !");
+                        System.out.println("Appuyer sur entrée pour continuer ! ");
+                        this.sc.nextLine();
+                        this.menu(client);
+                    }
+                }
+            }
+            case 2 -> {
+                System.out.println("Historique de vos commandes : ");
+                client.getHistorique_commandes(client);
+            }
+            case 3 -> {
+                this.menu(client);
+            }
+            default -> {
+                System.out.println("Erreur de saisie !");
+                System.out.println("Appuyer sur entrée pour continuer ! ");
+                this.sc.nextLine();
+                this.menu(client);
             }
         }
 
@@ -148,6 +185,80 @@ public class MenuLayouts {
 
     public void afficher_accompagnements() {
 
+    }
+
+    public static void main(String[] args) {
+        Plat p = new Plat("Burger classique", new ArrayList<>(){
+            {
+                add(Ingredient.get_ingredient_by_id(1));
+                add(Ingredient.get_ingredient_by_id(2));
+                add(Ingredient.get_ingredient_by_id(3));
+                add(Ingredient.get_ingredient_by_id(4));
+                add(Ingredient.get_ingredient_by_id(5));
+                add(Ingredient.get_ingredient_by_id(6));
+                add(Ingredient.get_ingredient_by_id(7));
+            }
+        }, true, 6.00);
+        p.sauvegarder_plat();
+        Plat p1 = new Plat("Nuggets", new ArrayList<>(){
+            {
+                add(Ingredient.get_ingredient_by_id(8));
+            }
+        }, true, 6.00);
+        p1.sauvegarder_plat();
+        Plat p2 = new Plat("Croque Monsieur", new ArrayList<>(){
+            {
+                add(Ingredient.get_ingredient_by_id(10));
+                add(Ingredient.get_ingredient_by_id(9));
+                add(Ingredient.get_ingredient_by_id(11));
+            }
+        }, true, 12.50);
+        p2.sauvegarder_plat();
+        Plat p3 = new Plat("Big Burger", new ArrayList<>(){
+            {
+                add(Ingredient.get_ingredient_by_id(1));
+                add(Ingredient.get_ingredient_by_id(2));
+                add(Ingredient.get_ingredient_by_id(2));
+                add(Ingredient.get_ingredient_by_id(2));
+                add(Ingredient.get_ingredient_by_id(4));
+                add(Ingredient.get_ingredient_by_id(4));
+                add(Ingredient.get_ingredient_by_id(4));
+                add(Ingredient.get_ingredient_by_id(4));
+                add(Ingredient.get_ingredient_by_id(3));
+                add(Ingredient.get_ingredient_by_id(5));
+                add(Ingredient.get_ingredient_by_id(6));
+                add(Ingredient.get_ingredient_by_id(7));
+            }
+        }, false, 0);
+        p3.sauvegarder_plat();
+        Plat p4 = new Plat("Fish Burger", new ArrayList<>(){
+            {
+                add(Ingredient.get_ingredient_by_id(1));
+                add(Ingredient.get_ingredient_by_id(7));
+                add(Ingredient.get_ingredient_by_id(12));
+            }
+        }, true, 8.00);
+        p4.sauvegarder_plat();
+        Plat p5 = new Plat("Chicken Burger", new ArrayList<>(){
+            {
+                add(Ingredient.get_ingredient_by_id(1));
+                add(Ingredient.get_ingredient_by_id(8));
+                add(Ingredient.get_ingredient_by_id(5));
+                add(Ingredient.get_ingredient_by_id(7));
+            }
+        }, true, 8.00);
+        p5.sauvegarder_plat();
+        Plat p6 = new Plat("Salade Veggie", new ArrayList<>(){
+            {
+                add(Ingredient.get_ingredient_by_id(5));
+                add(Ingredient.get_ingredient_by_id(15));
+                add(Ingredient.get_ingredient_by_id(16));
+                add(Ingredient.get_ingredient_by_id(13));
+                add(Ingredient.get_ingredient_by_id(14));
+                add(Ingredient.get_ingredient_by_id(17));
+            }
+        }, false, 0.00);
+        p6.sauvegarder_plat();
     }
 
 }

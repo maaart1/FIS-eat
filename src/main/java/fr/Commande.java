@@ -2,20 +2,25 @@ package fr;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Commande {
     private int numero_commande;
     private Client client;
     private LocalDate date;
     private int prix;
-    private ArrayList<Menu> menus;
-    private ArrayList<Produit> produits;
+    private List<Menu> menus;
+    private List<Plat> plats;
+    private List<Accompagnement> accompagnements;
+    private List<Boisson> boissons;
     private boolean en_attente;
     private boolean en_preparation;
     private boolean prete;
 
     public Commande(Client client) {
         this.client = client;
+        this.date = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth());
     }
 
     public int getNumero_commande() {
@@ -24,14 +29,6 @@ public class Commande {
 
     public void setNumero_commande(int numero_commande) {
         this.numero_commande = numero_commande;
-    }
-
-    public int getNumero_client() {
-        return numero_client;
-    }
-
-    public void setNumero_client(int numero_client) {
-        this.numero_client = numero_client;
     }
 
     public Client getClient() {
@@ -58,20 +55,8 @@ public class Commande {
         this.prix = prix;
     }
 
-    public ArrayList<Menu> getMenus() {
-        return menus;
-    }
-
     public void setMenus(ArrayList<Menu> menus) {
         this.menus = menus;
-    }
-
-    public ArrayList<Produit> getProduits() {
-        return produits;
-    }
-
-    public void setProduits(ArrayList<Produit> produits) {
-        this.produits = produits;
     }
 
     public boolean isEn_attente() {
@@ -96,5 +81,13 @@ public class Commande {
 
     public void setPrete(boolean prete) {
         this.prete = prete;
+    }
+
+    // TODO
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Commande n°" + numero_commande + " : \n" + "\n Nom du client : " + client.get_nom() + "\n Date : " + date + "\n Prix : " + prix);
+        return stringBuilder.toString();
     }
 }

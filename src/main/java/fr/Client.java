@@ -10,11 +10,11 @@ public class Client implements Serializable {
 
     private String nom;
     private int numero_client;
-    private List<Commande> list_commandes;
+    private List<Commande> historique_commandes;
 
     public Client(String nom) {
         this.nom = nom;
-        this.list_commandes = new ArrayList<>();
+        this.historique_commandes = new ArrayList<>();
         this.numero_client = Client.get_nombres_clients();
     }
 
@@ -30,7 +30,6 @@ public class Client implements Serializable {
 
     public static Client get_client_by_id(int numero_client) {
         File file = new File(System.getProperty("user.dir") + "/bdd/clients/" + numero_client + ".ser");
-        System.out.println(file.getPath());
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInput objectInput = new ObjectInputStream(fileInputStream);
@@ -48,7 +47,6 @@ public class Client implements Serializable {
         else return false;
     }
 
-
     public static int get_nombres_clients() {
         File directory = new File(System.getProperty("user.dir") + "/bdd/clients/");
         File[] content_files = directory.listFiles();
@@ -61,5 +59,15 @@ public class Client implements Serializable {
 
     public int get_numero_client() {
         return this.numero_client;
+    }
+
+    public String getHistorique_commandes(Client client) {
+        this.historique_commandes.add(new Commande(client));
+        StringBuilder stringBuilder =  new StringBuilder();
+        for (Commande commande : this.historique_commandes) {
+            stringBuilder.append(commande + ", ");
+        }
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
+        return stringBuilder.toString();
     }
 }

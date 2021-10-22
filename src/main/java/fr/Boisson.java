@@ -9,7 +9,6 @@ public class Boisson implements Serializable {
 
     private String nom;
     private int numero_boisson;
-    private boolean hors_menu;
     private double prix;
 
     public Boisson(String nom, double prix) {
@@ -23,8 +22,6 @@ public class Boisson implements Serializable {
             FileOutputStream fileOutputStream = new FileOutputStream( System.getProperty("user.dir") + "/bdd/produits/boissons/" + this.numero_boisson + ".ser");
             ObjectOutput objectOutput = new ObjectOutputStream(fileOutputStream);
             objectOutput.writeObject(this);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

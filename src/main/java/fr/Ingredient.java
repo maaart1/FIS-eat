@@ -26,8 +26,6 @@ public class Ingredient implements Serializable {
             FileOutputStream fileOutputStream = new FileOutputStream( System.getProperty("user.dir") + "/bdd/ingredients/" + this.numero_ingredient + ".ser");
             ObjectOutput objectOutput = new ObjectOutputStream(fileOutputStream);
             objectOutput.writeObject(this);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -41,20 +39,11 @@ public class Ingredient implements Serializable {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInput objectInput = new ObjectInputStream(fileInputStream);
             return (Ingredient) objectInput.readObject();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;
     }
-
-    /*public static void main(String[] args) {
-        Ingredient i = new Ingredient("Ketchup", false, "", 3);
-        i.sauvegarder_ingredient();
-    }*/
 
     public int get_nombres_ingredients(String path) {
         File directory = new File(path);

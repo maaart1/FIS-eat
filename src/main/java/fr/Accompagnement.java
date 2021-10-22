@@ -8,13 +8,12 @@ public class Accompagnement implements Serializable {
     private static final long serialVersionUID = 7072625591871715646L;
     private String nom;
     private int numero_accompagnement;
-    private boolean hors_menu;
     private double prix;
 
     public Accompagnement(String nom, double prix) {
         this.nom = nom;
         this.prix = prix;
-        this.numero_accompagnement = Boisson.get_nombres_boissons();
+        this.numero_accompagnement = Accompagnement.get_nombres_accompagnements();
     }
 
     public void sauvegarder_accompagnement() {
@@ -22,8 +21,6 @@ public class Accompagnement implements Serializable {
             FileOutputStream fileOutputStream = new FileOutputStream( System.getProperty("user.dir") + "/bdd/produits/accompagnements/" + this.numero_accompagnement + ".ser");
             ObjectOutput objectOutput = new ObjectOutputStream(fileOutputStream);
             objectOutput.writeObject(this);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
