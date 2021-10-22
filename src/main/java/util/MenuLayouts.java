@@ -130,6 +130,7 @@ public class MenuLayouts {
         System.out.print("Choix ? ");
         int choix = verification_choix(this.sc.nextLine());
         switch (choix) {
+            // TODO
             case 1 -> {
                 System.out.println("\t --------------------------------------------------------");
                 System.out.println("\t 1 - ");
@@ -142,6 +143,7 @@ public class MenuLayouts {
                 switch (next_choix) {
                     case 4 -> {
                         System.out.println("Choisir un plat :");
+                        // TODO Afficher que les plats qui sont possibles d'acheter en menu
                         int nombres_plats = Plat.get_nombres_plats();
                         for (int i = 1; i <= nombres_plats - 1; i++) {
                             Plat p = Plat.get_plat_by_id(i);
@@ -162,6 +164,7 @@ public class MenuLayouts {
                     }
                 }
             }
+            // TODO
             case 2 -> {
                 System.out.println("Historique de vos commandes : ");
                 client.getHistorique_commandes(client);
