@@ -58,10 +58,6 @@ public class Commande {
         this.prix = prix;
     }
 
-    public void setMenus(ArrayList<Menu> menus) {
-        this.menus = menus;
-    }
-
     public boolean isEn_attente() {
         return en_attente;
     }
@@ -86,7 +82,6 @@ public class Commande {
         this.prete = prete;
     }
 
-    // TODO
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -111,5 +106,9 @@ public class Commande {
         stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
         stringBuilder.append("\n");
         return stringBuilder.toString();
+    }
+
+    public void ajouter_menu(Menu menu) {
+        this.menus.add(menu);
     }
 }
