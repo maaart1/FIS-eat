@@ -96,7 +96,6 @@ public class MenuLayouts {
     public void menu(Client client) {
         System.out.println("\t --------------------------------------------------------");
         System.out.println("Bonjour " + client.get_nom() + " :)");
-        System.out.println(client.getHistorique_commandes(client));
         System.out.println("\t 1 - Passer une commande");
         System.out.println("\t 2 - Historique des commandes");
         System.out.println("\t 3 - Déconnecter");
@@ -104,7 +103,7 @@ public class MenuLayouts {
         int choix = verification_choix(this.sc.nextLine());
         switch (choix) {
             case 1 -> passer_commande(client);
-            case 2 -> historique_commandes();
+            case 2 -> historique_commandes(client);
             case 3 -> deconnecter();
 
         }
@@ -115,8 +114,11 @@ public class MenuLayouts {
         this.page_accueil();
     }
 
-    public void historique_commandes() {
+    public void historique_commandes(Client client) {
         System.out.println("Historique de vos commandes : ");
+        System.out.println(client.getHistorique_commandes());
+        this.sc.nextLine();
+        this.menu(client);
     }
 
     public void passer_commande(Client client) {
@@ -133,9 +135,9 @@ public class MenuLayouts {
             // TODO
             case 1 -> {
                 System.out.println("\t --------------------------------------------------------");
-                System.out.println("\t 1 - ");
-                System.out.println("\t 2 - ");
-                System.out.println("\t 3 - ");
+                System.out.println("\t 1 - Le classique");
+                System.out.println("\t 2 - Le veggie");
+                System.out.println("\t 3 - La grande faim");
                 System.out.println("\t 4 - Commander un menu en choix libre (8.00 €)");
                 System.out.println("\t 5 - Annuler");
                 System.out.print("Choix ? ");
@@ -147,7 +149,7 @@ public class MenuLayouts {
                         int nombres_plats = Plat.get_nombres_plats();
                         for (int i = 1; i <= nombres_plats - 1; i++) {
                             Plat p = Plat.get_plat_by_id(i);
-                            System.out.println(p);
+                            System.out.println("\t" + p);
                         }
                         System.out.print("Choix ? ");
                         int next_next_choix = verification_choix(this.sc.nextLine());
@@ -166,8 +168,8 @@ public class MenuLayouts {
             }
             // TODO
             case 2 -> {
-                System.out.println("Historique de vos commandes : ");
-                client.getHistorique_commandes(client);
+
+
             }
             case 3 -> {
                 this.menu(client);

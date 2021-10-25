@@ -46,4 +46,7 @@ public class Boisson implements Serializable {
         return content_files.length == 0 ? 1 : content_files.length + 1;
     }
 
+    public String getNom() {
+        return nom;
+    }
 }

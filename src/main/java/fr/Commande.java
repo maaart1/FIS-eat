@@ -21,6 +21,9 @@ public class Commande {
     public Commande(Client client) {
         this.client = client;
         this.date = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth());
+        this.plats = new ArrayList<>();
+        this.boissons = new ArrayList<>();
+        this.accompagnements = new ArrayList<>();
     }
 
     public int getNumero_commande() {
@@ -87,7 +90,26 @@ public class Commande {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Commande n°" + numero_commande + " : \n" + "\n Nom du client : " + client.get_nom() + "\n Date : " + date + "\n Prix : " + prix);
+        stringBuilder.append("Commande n°" + numero_commande + " : \n" + "\t Date : " + date + "\n\t Prix : " + prix);
+
+        stringBuilder.append("\n\t Boissons : ");
+        for (Boisson boisson: this.boissons) {
+            stringBuilder.append(boisson.getNom()).append(", ");
+        }
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
+
+        stringBuilder.append("\n\t Plats : ");
+        for (Plat plat: this.plats) {
+            stringBuilder.append(plat.getNom());
+        }
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
+
+        stringBuilder.append("\n\t Accompagnements : ");
+        for (Accompagnement accompagnement: this.accompagnements) {
+            stringBuilder.append(accompagnement.getNom());
+        }
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
+        stringBuilder.append("\n");
         return stringBuilder.toString();
     }
 }
