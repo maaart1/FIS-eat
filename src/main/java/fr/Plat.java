@@ -1,7 +1,6 @@
 package fr;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Plat implements Serializable {
@@ -51,21 +50,6 @@ public class Plat implements Serializable {
         File directory = new File(System.getProperty("user.dir") + "/bdd/produits/plats/");
         File[] content_files = directory.listFiles();
         return content_files.length == 0 ? 1 : content_files.length + 1;
-    }
-
-
-    public static void main(String[] args) {
-        Plat p = new Plat("Burger classique", new ArrayList<>(){
-            {
-                add(Ingredient.get_ingredient_by_id(1));
-                add(Ingredient.get_ingredient_by_id(2));
-                add(Ingredient.get_ingredient_by_id(3));
-                add(Ingredient.get_ingredient_by_id(4));
-                add(Ingredient.get_ingredient_by_id(5));
-                add(Ingredient.get_ingredient_by_id(6));
-            }
-        }, true, 12.50);
-        p.sauvegarder_plat();
     }
 
     public void setNom(String nom) {

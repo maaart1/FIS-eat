@@ -29,7 +29,6 @@ public class Boisson implements Serializable {
 
     public static Boisson get_boisson_by_id(int numero_boisson) {
         File file = new File(System.getProperty("user.dir") + "/bdd/produits/boissons/" + numero_boisson + ".ser");
-        System.out.println(file.getPath());
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInput objectInput = new ObjectInputStream(fileInputStream);
@@ -48,5 +47,10 @@ public class Boisson implements Serializable {
 
     public String getNom() {
         return nom;
+    }
+
+    @Override
+    public String toString() {
+        return this.numero_boisson + " : " + this.nom + " (" + this.prix + ")";
     }
 }

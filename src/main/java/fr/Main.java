@@ -3,6 +3,7 @@ package fr;
 import util.MenuLayouts;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -11,5 +12,7 @@ public class Main {
         menu.logo();
         menu.page_accueil();
         menu.sc.close();
+
+
     }
 }

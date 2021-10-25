@@ -62,12 +62,16 @@ public class Client implements Serializable {
     }
 
     public String getHistorique_commandes() {
-        this.historique_commandes.add(new Commande(this));
-        StringBuilder stringBuilder =  new StringBuilder();
-        for (Commande commande : this.historique_commandes) {
-            stringBuilder.append(commande).append(", ");
+        if (!this.historique_commandes.isEmpty()) {
+            // this.historique_commandes.add(new Commande(this));
+            StringBuilder stringBuilder = new StringBuilder();
+            for (Commande commande : this.historique_commandes) {
+                stringBuilder.append(commande).append(", ");
+            }
+            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
+            return stringBuilder.toString();
+        }else {
+            return "Pas de commandes !";
         }
-        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
-        return stringBuilder.toString();
     }
 }
