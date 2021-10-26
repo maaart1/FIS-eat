@@ -6,6 +6,7 @@ import java.util.List;
 public class Accompagnement implements Serializable {
     @Serial
     private static final long serialVersionUID = 7072625591871715646L;
+
     private String nom;
     private int numero_accompagnement;
     private double prix;

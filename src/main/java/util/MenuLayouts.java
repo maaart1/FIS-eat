@@ -127,7 +127,8 @@ public class MenuLayouts {
         // Choix menu ou hors menu
         System.out.println("\t 1 - Commander un menu");
         System.out.println("\t 2 - Commander en hors menu");
-        System.out.println("\t 3 - Annuler");
+        System.out.println("\t 3 - Afficher la commande en cours");
+        System.out.println("\t 4 - Annuler");
         System.out.print("Choix ? ");
         int choix = verification_choix(this.sc.nextLine());
         switch (choix) {
@@ -172,12 +173,15 @@ public class MenuLayouts {
                         }
                     }
                     case 4 -> {
-                        // TODO Afficher que les plats qui sont possibles d'acheter en menu
-                        this.afficher_plats();
+                        this.afficher_plats(false);
                         System.out.print("Choix ? ");
                         int plat = verification_choix(this.sc.nextLine());
-                        while (plat != 1 && plat != 2 && plat != 3 && plat != 5 && plat != 6) {
-                            this.afficher_plats();
+                        while (plat < 1 || plat > 7) {
+                            System.out.println("\t --------------------------------------------------------");
+                            System.out.println("Erreur de saisie !");
+                            System.out.println("Appuyer sur entrée pour continuer ! ");
+                            this.sc.nextLine();
+                            this.afficher_plats(false);
                             System.out.print("Choix ? ");
                             plat = verification_choix(this.sc.nextLine());
                         }
@@ -186,17 +190,30 @@ public class MenuLayouts {
                         this.afficher_boissons();
                         System.out.print("Choix ? ");
                         int boisson = verification_choix(this.sc.nextLine());
-                        Boisson.get_boisson_by_id(boisson);
+                        while (boisson < 1 || boisson > 9) {
+                            System.out.println("\t --------------------------------------------------------");
+                            System.out.println("Erreur de saisie !");
+                            System.out.println("Appuyer sur entrée pour continuer ! ");
+                            this.sc.nextLine();
+                            this.afficher_boissons();
+                            System.out.print("Choix ? ");
+                            boisson = verification_choix(this.sc.nextLine());
+                        }
+                        commande.ajouter_boisson(Boisson.get_boisson_by_id(boisson));
 
                         this.afficher_accompagnements();
                         System.out.print("Choix ? ");
                         int accompagnement = verification_choix(this.sc.nextLine());
                         while (accompagnement != 1 && accompagnement != 2) {
+                            System.out.println("\t --------------------------------------------------------");
+                            System.out.println("Erreur de saisie !");
+                            System.out.println("Appuyer sur entrée pour continuer ! ");
+                            this.sc.nextLine();
                             this.afficher_accompagnements();
                             System.out.print("Choix ? ");
                             accompagnement = verification_choix(this.sc.nextLine());
                         }
-                        Accompagnement.get_accompagnement_by_id(accompagnement);
+                        commande.ajouter_accompagnement(Accompagnement.get_accompagnement_by_id(accompagnement));
 
                         System.out.println("\t Menu ajouté :)");
                         System.out.print("\t Fin de la commande ? (oui/non) ");
@@ -226,12 +243,18 @@ public class MenuLayouts {
                 System.out.print("Choix ? ");
                 int next_next_choix = verification_choix(this.sc.nextLine());
                 switch (next_next_choix) {
-                    case 1 -> System.out.println("Plat");
-                    case 2 -> System.out.println("Boisson");
-                    case 3 -> System.out.println("Acocmgnement");
+                    case 1 -> {
+                        commande.ajouter_plat(Plat.get_plat_by_id(this.choix_plat_hors_menu()));
+                    }
+                    case 2 -> {
+                        System.out.println("Boisson");
+                    }
+                    case 3 -> {
+                        System.out.println("Accomgnement");
+                    }
                 }
             }
-            case 3 -> {
+            case 4 -> {
                 this.menu(client);
             }
             default -> {
@@ -244,6 +267,22 @@ public class MenuLayouts {
 
     }
 
+    public int choix_plat_hors_menu() {
+        this.afficher_plats(true);
+        System.out.print("Choix ? ");
+        int plat = verification_choix(this.sc.nextLine());
+        while (plat != 1 && plat != 2 && plat != 3 && plat != 5 && plat != 6) {
+            System.out.println("\t --------------------------------------------------------");
+            System.out.println("Erreur de saisie !");
+            System.out.println("Appuyer sur entrée pour continuer ! ");
+            this.sc.nextLine();
+            this.afficher_plats(true);
+            System.out.print("Choix ? ");
+            plat = verification_choix(this.sc.nextLine());
+        }
+        return plat;
+    }
+
     public void afficher_boissons() {
         System.out.println("Choisir une boisson :");
         int nombres_boissons = Boisson.get_nombres_boissons();
@@ -253,11 +292,13 @@ public class MenuLayouts {
         }
     }
 
-    public void afficher_plats() {
+    public void afficher_plats(boolean hors_menu) {
         System.out.println("Choisir un plat :");
         int nombres_plats = Plat.get_nombres_plats();
         for (int i = 1; i <= nombres_plats - 1; i++) {
-            Plat p = Plat.get_plat_by_id_hors_menu(i);
+            Plat p;
+            if (hors_menu) p = Plat.get_plat_by_id_hors_menu(i);
+            else p = Plat.get_plat_by_id(i);
             if (p != null) System.out.println("\t" + p);
         }
     }
