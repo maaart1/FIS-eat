@@ -1,11 +1,12 @@
-import fr.*;
-import util.MenuLayouts;
+package util;
 
-import java.io.IOException;
+import fr.*;
+
 import java.util.ArrayList;
 
-public class Main2 {
-    public static void main(String[] args) throws IOException {
+public class Load {
+
+    public static void charger_fichiers() {
         Boisson b = new Boisson("RedBull", 2);
         b.sauvegarder_boisson();
         Boisson b1 = new Boisson( "Coca-Cola", 1.50);
@@ -62,7 +63,6 @@ public class Main2 {
         i16.sauvegarder_ingredient();
         Ingredient i17 = new Ingredient("Galettes de pomme de terre", true, "à l'huile", 3);
         i17.sauvegarder_ingredient();
-
         Plat p = new Plat("Burger classique", new ArrayList<>(){
             {
                 add(i1);
@@ -141,16 +141,5 @@ public class Main2 {
         m2.sauvegarder_menu();
         Menu m3 = new Menu("Grande faim", b1, p3, a1, 12.00);
         m3.sauvegarder_menu();
-
-
-
-
-
-
-        /*MenuLayouts menu = new MenuLayouts();
-        System.out.println("\u001B[1m I am bold");
-        menu.logo();
-        menu.page_accueil();
-        menu.sc.close();*/
     }
 }

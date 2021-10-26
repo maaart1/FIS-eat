@@ -17,7 +17,7 @@ public class Ingredient implements Serializable {
         this.cuit = cuit;
         this.type_cuisson = type_cuisson;
         this.temps_preparation = temps_preparation;
-        this.numero_ingredient = this.get_nombres_ingredients(System.getProperty("user.dir") + "/bdd/ingredients/");
+        this.numero_ingredient = this.get_nombres_ingredients();
     }
 
     public void sauvegarder_ingredient() {
@@ -44,8 +44,8 @@ public class Ingredient implements Serializable {
         return null;
     }
 
-    public int get_nombres_ingredients(String path) {
-        File directory = new File(path);
+    public int get_nombres_ingredients() {
+        File directory = new File(System.getProperty("user.dir") + "/bdd/ingredients/");
         File[] content_files = directory.listFiles();
         return content_files.length == 0 ? 1 : content_files.length + 1;
     }
