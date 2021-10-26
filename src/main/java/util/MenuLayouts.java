@@ -1,6 +1,5 @@
 package util;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import fr.*;
@@ -144,33 +143,15 @@ public class MenuLayouts {
                 switch (next_choix) {
                     case 1 -> {
                         commande.ajouter_menu(Menu.get_menu_by_id(1));
-                        System.out.println("\t Menu ajouté :)");
-                        System.out.print("\t Fin de la commande ? (oui/non) ");
-                        String fin = this.sc.nextLine();
-                        switch (fin) {
-                            case "oui" -> System.out.println("Fin");
-                            case "non" -> this.passer_commande(client);
-                        }
+                        this.fin_commande(client, "Menu");
                     }
                     case 2 -> {
                         commande.ajouter_menu(Menu.get_menu_by_id(2));
-                        System.out.println("\t Menu ajouté :)");
-                        System.out.print("\t Fin de la commande ? (oui/non) ");
-                        String fin = this.sc.nextLine();
-                        switch (fin) {
-                            case "oui" -> System.out.println("Fin");
-                            case "non" -> this.passer_commande(client);
-                        }
+                        this.fin_commande(client, "Menu");
                     }
                     case 3 -> {
                         commande.ajouter_menu(Menu.get_menu_by_id(3));
-                        System.out.println("\t Menu ajouté :)");
-                        System.out.print("\t Fin de la commande ? (oui/non) ");
-                        String fin = this.sc.nextLine();
-                        switch (fin) {
-                            case "oui" -> System.out.println("Fin");
-                            case "non" -> this.passer_commande(client);
-                        }
+                        this.fin_commande(client, "Menu");
                     }
                     case 4 -> {
                         this.afficher_plats(false);
@@ -187,45 +168,13 @@ public class MenuLayouts {
                         }
                         commande.ajouter_plat(Plat.get_plat_by_id(plat));
 
-                        this.afficher_boissons();
-                        System.out.print("Choix ? ");
-                        int boisson = verification_choix(this.sc.nextLine());
-                        while (boisson < 1 || boisson > 9) {
-                            System.out.println("\t --------------------------------------------------------");
-                            System.out.println("Erreur de saisie !");
-                            System.out.println("Appuyer sur entrée pour continuer ! ");
-                            this.sc.nextLine();
-                            this.afficher_boissons();
-                            System.out.print("Choix ? ");
-                            boisson = verification_choix(this.sc.nextLine());
-                        }
-                        commande.ajouter_boisson(Boisson.get_boisson_by_id(boisson));
+                        commande.ajouter_boisson(Boisson.get_boisson_by_id(this.choix_boisson()));
 
-                        this.afficher_accompagnements();
-                        System.out.print("Choix ? ");
-                        int accompagnement = verification_choix(this.sc.nextLine());
-                        while (accompagnement != 1 && accompagnement != 2) {
-                            System.out.println("\t --------------------------------------------------------");
-                            System.out.println("Erreur de saisie !");
-                            System.out.println("Appuyer sur entrée pour continuer ! ");
-                            this.sc.nextLine();
-                            this.afficher_accompagnements();
-                            System.out.print("Choix ? ");
-                            accompagnement = verification_choix(this.sc.nextLine());
-                        }
-                        commande.ajouter_accompagnement(Accompagnement.get_accompagnement_by_id(accompagnement));
+                        commande.ajouter_accompagnement(Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()));
 
-                        System.out.println("\t Menu ajouté :)");
-                        System.out.print("\t Fin de la commande ? (oui/non) ");
-                        String fin = this.sc.nextLine();
-                        switch (fin) {
-                            case "oui" -> System.out.println("Fin");
-                            case "non" -> this.passer_commande(client);
-                        }
+                        this.fin_commande(client, "Menu");
                     }
-                    case 5 -> {
-                        this.menu(client);
-                    }
+                    case 5 -> this.menu(client);
                     default -> {
                         System.out.println("Erreur de saisie !");
                         System.out.println("Appuyer sur entrée pour continuer ! ");
@@ -245,18 +194,23 @@ public class MenuLayouts {
                 switch (next_next_choix) {
                     case 1 -> {
                         commande.ajouter_plat(Plat.get_plat_by_id(this.choix_plat_hors_menu()));
+                        this.fin_commande(client, "Produit");
                     }
                     case 2 -> {
-                        System.out.println("Boisson");
+                        commande.ajouter_boisson(Boisson.get_boisson_by_id(this.choix_boisson()));
+                        this.fin_commande(client,"Produit");
                     }
                     case 3 -> {
-                        System.out.println("Accomgnement");
+                        commande.ajouter_accompagnement(Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()));
+                        this.fin_commande(client, "Produit");
                     }
                 }
             }
-            case 4 -> {
-                this.menu(client);
+            // TODO Afficher la commande en cours
+            case 3 -> {
+
             }
+            case 4 -> this.menu(client);
             default -> {
                 System.out.println("Erreur de saisie !");
                 System.out.println("Appuyer sur entrée pour continuer ! ");
@@ -265,6 +219,20 @@ public class MenuLayouts {
             }
         }
 
+    }
+
+    public void fin_commande(Client client, String type) {
+        System.out.println("\t" + type  + " ajouté :)");
+        System.out.print("\t Fin de la commande ? (oui/non) ");
+        String fin = this.sc.nextLine();
+        switch (fin) {
+            case "oui" -> System.out.println("Fin");
+            case "non" -> this.passer_commande(client);
+            default -> {
+                System.out.println("\t --------------------------------------------------------");
+                this.fin_commande(client, type);
+            }
+        }
     }
 
     public int choix_plat_hors_menu() {
@@ -281,6 +249,38 @@ public class MenuLayouts {
             plat = verification_choix(this.sc.nextLine());
         }
         return plat;
+    }
+
+    public int choix_boisson() {
+        this.afficher_boissons();
+        System.out.print("Choix ? ");
+        int boisson = verification_choix(this.sc.nextLine());
+        while (boisson < 1 || boisson > 9) {
+            System.out.println("\t --------------------------------------------------------");
+            System.out.println("Erreur de saisie !");
+            System.out.println("Appuyer sur entrée pour continuer ! ");
+            this.sc.nextLine();
+            this.afficher_boissons();
+            System.out.print("Choix ? ");
+            boisson = verification_choix(this.sc.nextLine());
+        }
+        return boisson;
+    }
+
+    public int choix_accompagnements() {
+        this.afficher_accompagnements();
+        System.out.print("Choix ? ");
+        int accompagnement = verification_choix(this.sc.nextLine());
+        while (accompagnement != 1 && accompagnement != 2) {
+            System.out.println("\t --------------------------------------------------------");
+            System.out.println("Erreur de saisie !");
+            System.out.println("Appuyer sur entrée pour continuer ! ");
+            this.sc.nextLine();
+            this.afficher_accompagnements();
+            System.out.print("Choix ? ");
+            accompagnement = verification_choix(this.sc.nextLine());
+        }
+        return accompagnement;
     }
 
     public void afficher_boissons() {
