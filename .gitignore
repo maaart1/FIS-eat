@@ -1,1 +1,6 @@
 bdd/clients/*
+bdd/ingredients/*
+bdd/menus/*
+bdd/produits/Accompagnements/*
+bdd/produits/Plats/*
+bdd/produits/Boissons/*
