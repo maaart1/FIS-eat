@@ -24,6 +24,7 @@ public class Commande {
         this.plats = new ArrayList<>();
         this.boissons = new ArrayList<>();
         this.accompagnements = new ArrayList<>();
+        this.menus = new ArrayList<>();
     }
 
     public int getNumero_commande() {
