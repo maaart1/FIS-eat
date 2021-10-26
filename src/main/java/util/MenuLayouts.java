@@ -131,7 +131,6 @@ public class MenuLayouts {
         System.out.print("Choix ? ");
         int choix = verification_choix(this.sc.nextLine());
         switch (choix) {
-            // TODO Faire fonctionner l'affchage des menus et des plats (affichage des boissons OK)
             case 1 -> {
                 System.out.println("\t --------------------------------------------------------");
                 System.out.println("\t 1 - Le classique (7.00 €)");
@@ -177,16 +176,35 @@ public class MenuLayouts {
                         this.afficher_plats();
                         System.out.print("Choix ? ");
                         int plat = verification_choix(this.sc.nextLine());
+                        while (plat != 1 && plat != 2 && plat != 3 && plat != 5 && plat != 6) {
+                            this.afficher_plats();
+                            System.out.print("Choix ? ");
+                            plat = verification_choix(this.sc.nextLine());
+                        }
+                        commande.ajouter_plat(Plat.get_plat_by_id(plat));
 
                         this.afficher_boissons();
                         System.out.print("Choix ? ");
                         int boisson = verification_choix(this.sc.nextLine());
+                        Boisson.get_boisson_by_id(boisson);
 
                         this.afficher_accompagnements();
                         System.out.print("Choix ? ");
                         int accompagnement = verification_choix(this.sc.nextLine());
+                        while (accompagnement != 1 && accompagnement != 2) {
+                            this.afficher_accompagnements();
+                            System.out.print("Choix ? ");
+                            accompagnement = verification_choix(this.sc.nextLine());
+                        }
+                        Accompagnement.get_accompagnement_by_id(accompagnement);
 
-
+                        System.out.println("\t Menu ajouté :)");
+                        System.out.print("\t Fin de la commande ? (oui/non) ");
+                        String fin = this.sc.nextLine();
+                        switch (fin) {
+                            case "oui" -> System.out.println("Fin");
+                            case "non" -> this.passer_commande(client);
+                        }
                     }
                     case 5 -> {
                         this.menu(client);
@@ -239,8 +257,8 @@ public class MenuLayouts {
         System.out.println("Choisir un plat :");
         int nombres_plats = Plat.get_nombres_plats();
         for (int i = 1; i <= nombres_plats - 1; i++) {
-            Plat p = Plat.get_plat_by_id(i);
-            System.out.println("\t" + p);
+            Plat p = Plat.get_plat_by_id_hors_menu(i);
+            if (p != null) System.out.println("\t" + p);
         }
     }
 

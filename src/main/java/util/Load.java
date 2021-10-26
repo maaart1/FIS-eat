@@ -25,7 +25,7 @@ public class Load {
         b8.sauvegarder_boisson();
         Boisson b9 = new Boisson( "Eau Plate", 1);
         b9.sauvegarder_boisson();
-        Accompagnement a = new Accompagnement ( " Frites", 2.50);
+        Accompagnement a = new Accompagnement ( "Frites", 2.50);
         a.sauvegarder_accompagnement();
         Accompagnement a1 = new Accompagnement("Potatoes", 2.50);
         a1.sauvegarder_accompagnement();

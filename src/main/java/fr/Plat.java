@@ -42,6 +42,22 @@ public class Plat implements Serializable {
         }
         return null;
     }
+
+    public static Plat get_plat_by_id_hors_menu(int numero_produit) {
+        File file = new File(System.getProperty("user.dir") + "/bdd/produits/plats/" + numero_produit + ".ser");
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInput objectInput = new ObjectInputStream(fileInputStream);
+            Plat plat = (Plat) objectInput.readObject();
+            if (plat.isHors_menu())  {
+                return plat;
+            }
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public String getNom() {
         return nom;
     }
@@ -52,22 +68,18 @@ public class Plat implements Serializable {
         return content_files.length == 0 ? 1 : content_files.length + 1;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
     public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public boolean isHors_menu() {
+        return hors_menu;
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder =  new StringBuilder();
-        stringBuilder.append(this.numero_plat + " : " + this.nom + " (" + this.prix + ") : ");
+        stringBuilder.append(this.numero_plat + " : " + this.nom + " (" + this.prix + " €) : ");
         for (Ingredient ingredient : this.ingredients) {
             stringBuilder.append(ingredient + ", ");
         }

@@ -51,6 +51,6 @@ public class Boisson implements Serializable {
 
     @Override
     public String toString() {
-        return this.numero_boisson + " : " + this.nom + " (" + this.prix + ")";
+        return this.numero_boisson + " : " + this.nom + " (" + this.prix + " €)";
     }
 }

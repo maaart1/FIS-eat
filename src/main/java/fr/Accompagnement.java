@@ -28,7 +28,6 @@ public class Accompagnement implements Serializable {
 
     public static Accompagnement get_accompagnement_by_id(int numero_accompagnement) {
         File file = new File(System.getProperty("user.dir") + "/bdd/produits/accompagnements/" + numero_accompagnement + ".ser");
-        System.out.println(file.getPath());
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInput objectInput = new ObjectInputStream(fileInputStream);
@@ -47,5 +46,10 @@ public class Accompagnement implements Serializable {
 
     public String getNom() {
         return nom;
+    }
+
+    @Override
+    public String toString() {
+        return this.numero_accompagnement + " : " + this.nom + " (" + this.prix + " €) ";
     }
 }

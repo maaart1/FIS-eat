@@ -112,4 +112,17 @@ public class Commande {
     public void ajouter_menu(Menu menu) {
         this.menus.add(menu);
     }
+
+    public void ajouter_plat(Plat plat) {
+        this.plats.add(plat);
+    }
+
+    public void ajouter_boisson(Boisson boisson) {
+        this.boissons.add(boisson);
+    }
+
+    public void ajouter_accompagnement(Accompagnement accompagnement) {
+        this.accompagnements.add(accompagnement);
+    }
+
 }
