@@ -17,7 +17,7 @@ public class Ingredient implements Serializable {
         this.cuit = cuit;
         this.type_cuisson = type_cuisson;
         this.temps_preparation = temps_preparation;
-        this.numero_ingredient = 1;
+        this.numero_ingredient = this.get_nombres_ingredients(System.getProperty("user.dir") + "/bdd/ingredients/");
     }
 
     public void sauvegarder_ingredient() {
