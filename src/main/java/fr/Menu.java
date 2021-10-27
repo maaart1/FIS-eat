@@ -61,4 +61,12 @@ public class Menu implements Serializable {
                 ", prix=" + prix +
                 '}';
     }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public double getPrix() {
+        return prix;
+    }
 }

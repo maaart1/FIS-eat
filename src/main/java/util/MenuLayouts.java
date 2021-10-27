@@ -42,7 +42,9 @@ public class MenuLayouts {
     }
 
     public void connexion_invite() {
-        this.menu(new Client("Invité"));
+        Client client = new Client("Invité");
+        Commande commande = new Commande(client);
+        this.menu(client, commande);
     }
 
     public void incription() {
@@ -70,7 +72,8 @@ public class MenuLayouts {
         }
         else {
             Client client = Client.get_client_by_id(numero_client);
-            this.menu(client);
+            Commande commande = new Commande(client);
+            this.menu(client, commande);
         }
     }
 
@@ -91,7 +94,7 @@ public class MenuLayouts {
         return Integer.parseInt(choix);
     }
 
-    public void menu(Client client) {
+    public void menu(Client client, Commande commande) {
         System.out.println("\t --------------------------------------------------------");
         System.out.println("Bonjour " + client.get_nom() + " :)");
         System.out.println("\t 1 - Passer une commande");
@@ -100,10 +103,9 @@ public class MenuLayouts {
         System.out.print("Choix ? ");
         int choix = verification_choix(this.sc.nextLine());
         switch (choix) {
-            case 1 -> passer_commande(client);
-            case 2 -> historique_commandes(client);
+            case 1 -> passer_commande(client, commande);
+            case 2 -> historique_commandes(client, commande);
             case 3 -> deconnecter();
-
         }
     }
 
@@ -112,15 +114,15 @@ public class MenuLayouts {
         this.page_accueil();
     }
 
-    public void historique_commandes(Client client) {
+    // TODO Afficher l'historique des commandes => il faut avoir finit la validation de la commande pour le faire
+    public void historique_commandes(Client client, Commande commande) {
         System.out.println("Historique de vos commandes : ");
         System.out.print(client.getHistorique_commandes());
         this.sc.nextLine();
-        this.menu(client);
+        this.menu(client, commande);
     }
 
-    public void passer_commande(Client client) {
-        Commande commande = new Commande(client);
+    public void passer_commande(Client client, Commande commande) {
         System.out.println("\t --------------------------------------------------------");
         System.out.println("Passer commande : ");
         // Choix menu ou hors menu
@@ -143,15 +145,15 @@ public class MenuLayouts {
                 switch (next_choix) {
                     case 1 -> {
                         commande.ajouter_menu(Menu.get_menu_by_id(1));
-                        this.fin_commande(client, "Menu");
+                        this.fin_commande(client, commande, "Menu");
                     }
                     case 2 -> {
                         commande.ajouter_menu(Menu.get_menu_by_id(2));
-                        this.fin_commande(client, "Menu");
+                        this.fin_commande(client, commande, "Menu");
                     }
                     case 3 -> {
                         commande.ajouter_menu(Menu.get_menu_by_id(3));
-                        this.fin_commande(client, "Menu");
+                        this.fin_commande(client, commande, "Menu");
                     }
                     case 4 -> {
                         this.afficher_plats(false);
@@ -172,18 +174,17 @@ public class MenuLayouts {
 
                         commande.ajouter_accompagnement(Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()));
 
-                        this.fin_commande(client, "Menu");
+                        this.fin_commande(client, commande, "Menu");
                     }
-                    case 5 -> this.menu(client);
+                    case 5 -> this.menu(client, commande);
                     default -> {
                         System.out.println("Erreur de saisie !");
                         System.out.println("Appuyer sur entrée pour continuer ! ");
                         this.sc.nextLine();
-                        this.menu(client);
+                        this.menu(client, commande);
                     }
                 }
             }
-            // TODO Afficher les plats, boissons et accomgnements après choix et que ceux qui sont possibles d'acheter en hors menu
             case 2 -> {
                 System.out.println("\t --------------------------------------------------------");
                 System.out.println("\t 1 - Un plat");
@@ -194,43 +195,45 @@ public class MenuLayouts {
                 switch (next_next_choix) {
                     case 1 -> {
                         commande.ajouter_plat(Plat.get_plat_by_id(this.choix_plat_hors_menu()));
-                        this.fin_commande(client, "Produit");
+                        this.fin_commande(client, commande, "Produit");
                     }
                     case 2 -> {
                         commande.ajouter_boisson(Boisson.get_boisson_by_id(this.choix_boisson()));
-                        this.fin_commande(client,"Produit");
+                        this.fin_commande(client, commande,"Produit");
                     }
                     case 3 -> {
                         commande.ajouter_accompagnement(Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()));
-                        this.fin_commande(client, "Produit");
+                        this.fin_commande(client, commande, "Produit");
                     }
                 }
             }
             // TODO Afficher la commande en cours
             case 3 -> {
-
+                System.out.println(commande.afficher_commande_en_cours());
+                this.fin_commande(client, commande, "non");
             }
-            case 4 -> this.menu(client);
+            case 4 -> this.menu(client, commande);
             default -> {
                 System.out.println("Erreur de saisie !");
                 System.out.println("Appuyer sur entrée pour continuer ! ");
                 this.sc.nextLine();
-                this.menu(client);
+                this.menu(client, commande);
             }
         }
 
     }
 
-    public void fin_commande(Client client, String type) {
-        System.out.println("\t" + type  + " ajouté :)");
+    // TODO Changer la route de la réponse lorsque le client dit "oui" (faire une validation de commande)
+    public void fin_commande(Client client, Commande commande, String type) {
+        if (!type.equals("non")) System.out.println("\t " + type  + " ajouté :)");
         System.out.print("\t Fin de la commande ? (oui/non) ");
         String fin = this.sc.nextLine();
         switch (fin) {
             case "oui" -> System.out.println("Fin");
-            case "non" -> this.passer_commande(client);
+            case "non" -> this.passer_commande(client, commande);
             default -> {
                 System.out.println("\t --------------------------------------------------------");
-                this.fin_commande(client, type);
+                this.fin_commande(client, commande, type);
             }
         }
     }

@@ -86,4 +86,8 @@ public class Plat implements Serializable {
         stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
         return stringBuilder.toString();
     }
+
+    public double getPrix() {
+        return prix;
+    }
 }

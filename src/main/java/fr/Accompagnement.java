@@ -53,4 +53,8 @@ public class Accompagnement implements Serializable {
     public String toString() {
         return this.numero_accompagnement + " : " + this.nom + " (" + this.prix + " €) ";
     }
+
+    public double getPrix() {
+        return prix;
+    }
 }

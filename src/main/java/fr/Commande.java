@@ -9,7 +9,7 @@ public class Commande {
     private int numero_commande;
     private Client client;
     private LocalDate date;
-    private int prix;
+    private double prix;
     private List<Menu> menus;
     private List<Plat> plats;
     private List<Accompagnement> accompagnements;
@@ -51,11 +51,7 @@ public class Commande {
         this.date = date;
     }
 
-    public int getPrix() {
-        return prix;
-    }
-
-    public void setPrix(int prix) {
+    public void setPrix(double prix) {
         this.prix = prix;
     }
 
@@ -86,26 +82,14 @@ public class Commande {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Commande n°" + numero_commande + " : \n" + "\t Date : " + date + "\n\t Prix : " + prix);
+        stringBuilder.append("Commande n°").append(numero_commande)
+                .append(" : \n")
+                .append("\t Date : ")
+                .append(date)
+                .append("\n\t Prix : ")
+                .append(prix);
 
-        stringBuilder.append("\n\t Boissons : ");
-        for (Boisson boisson: this.boissons) {
-            stringBuilder.append(boisson.getNom()).append(", ");
-        }
-        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
-
-        stringBuilder.append("\n\t Plats : ");
-        for (Plat plat: this.plats) {
-            stringBuilder.append(plat.getNom());
-        }
-        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
-
-        stringBuilder.append("\n\t Accompagnements : ");
-        for (Accompagnement accompagnement: this.accompagnements) {
-            stringBuilder.append(accompagnement.getNom());
-        }
-        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
-        stringBuilder.append("\n");
+        stringBuilder.append(this.afficher_commande_list());
         return stringBuilder.toString();
     }
 
@@ -125,4 +109,58 @@ public class Commande {
         this.accompagnements.add(accompagnement);
     }
 
+    public String afficher_commande_en_cours() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(this.afficher_commande_list());
+        return stringBuilder.toString();
+    }
+
+    private String afficher_commande_list() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\t Menus : ");
+        for (Menu menu: this.menus) {
+            sb.append(menu.getNom()).append(", ");
+        }
+
+        sb.append("\n\t Boissons : ");
+        for (Boisson boisson: this.boissons) {
+            sb.append(boisson.getNom()).append(", ");
+        }
+
+        sb.append("\n\t Plats : ");
+        for (Plat plat: this.plats) {
+            sb.append(plat.getNom()).append(", ");
+        }
+
+        sb.append("\n\t Accompagnements : ");
+        for (Accompagnement accompagnement: this.accompagnements) {
+            sb.append(accompagnement.getNom()).append(", ");
+        }
+        sb.append("\n\t --------------------------------------------------------")
+                .append("\n\t Prix de la commande : ")
+                .append(this.get_commande_prix())
+                .append(" €");
+        return sb.toString();
+    }
+
+    public double get_commande_prix() {
+        double prix_tmp = 0;
+        for (Menu menu: this.menus) {
+            prix_tmp += menu.getPrix();
+        }
+
+        for (Boisson boisson: this.boissons) {
+            prix_tmp += boisson.getPrix();
+        }
+
+        for (Plat plat: this.plats) {
+            prix_tmp += plat.getPrix();
+        }
+
+        for (Accompagnement accompagnement: this.accompagnements) {
+            prix_tmp += accompagnement.getPrix();
+        }
+        this.setPrix(prix_tmp);
+        return this.prix;
+    }
 }
