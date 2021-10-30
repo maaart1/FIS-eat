@@ -1,6 +1,6 @@
-bdd/clients/*
-bdd/ingredients/*
-bdd/menus/*
-bdd/produits/Accompagnements/*
-bdd/produits/Plats/*
-bdd/produits/Boissons/*
+bdd/clients/*.ser
+bdd/ingredients/*.ser
+bdd/menus/*.ser
+bdd/produits/Accompagnements/*.ser
+bdd/produits/Plats/*.ser
+bdd/produits/Boissons/*.ser

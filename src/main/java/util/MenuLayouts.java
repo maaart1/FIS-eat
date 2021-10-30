@@ -181,7 +181,7 @@ public class MenuLayouts {
                         System.out.println("Erreur de saisie !");
                         System.out.println("Appuyer sur entrée pour continuer ! ");
                         this.sc.nextLine();
-                        this.menu(client, commande);
+                        this.passer_commande(client, commande);
                     }
                 }
             }
@@ -207,7 +207,6 @@ public class MenuLayouts {
                     }
                 }
             }
-            // TODO Afficher la commande en cours
             case 3 -> {
                 System.out.println(commande.afficher_commande_en_cours());
                 this.fin_commande(client, commande, "non");
@@ -217,7 +216,7 @@ public class MenuLayouts {
                 System.out.println("Erreur de saisie !");
                 System.out.println("Appuyer sur entrée pour continuer ! ");
                 this.sc.nextLine();
-                this.menu(client, commande);
+                this.passer_commande(client, commande);
             }
         }
 
@@ -229,13 +228,20 @@ public class MenuLayouts {
         System.out.print("\t Fin de la commande ? (oui/non) ");
         String fin = this.sc.nextLine();
         switch (fin) {
-            case "oui" -> System.out.println("Fin");
+            case "oui" -> this.validation_commande(client, commande);
             case "non" -> this.passer_commande(client, commande);
             default -> {
                 System.out.println("\t --------------------------------------------------------");
                 this.fin_commande(client, commande, type);
             }
         }
+    }
+
+    public void validation_commande(Client client, Commande commande) {
+        System.out.println("\t --------------------------------------------------------");
+        System.out.println("Récapitulatif de la commande :");
+        System.out.println(commande.afficher_commande_en_cours());
+        System.out.println("\t Valider et payer ? (oui/non)");
     }
 
     public int choix_plat_hors_menu() {
