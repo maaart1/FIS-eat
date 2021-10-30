@@ -2,12 +2,18 @@ package util;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Scanner;
 
 import fr.*;
 
 public class MenuLayouts {
     public Scanner sc = new Scanner(System.in);
+
+    private List<Commande> en_attente;
+    private List<Commande> en_preparation;
+    private List<Commande> prete;
+
     public void logo() {
         System.out.println(" .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------. \n" +
                 "| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |\n" +
@@ -231,7 +237,6 @@ public class MenuLayouts {
                 this.passer_commande(client, commande);
             }
         }
-
     }
 
     public void fin_commande(Client client, Commande commande, String type) {
