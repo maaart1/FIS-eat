@@ -2,11 +2,24 @@ package util;
 
 import fr.*;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Load {
 
     public static void charger_fichiers() {
+        File client = new File(System.getProperty("user.dir") + "/bdd/client/");
+        client.mkdirs();
+        File ingredients = new File(System.getProperty("user.dir") + "/bdd/ingredients/");
+        ingredients.mkdirs();
+        File menus = new File(System.getProperty("user.dir") + "/bdd/menus/");
+        menus.mkdirs();
+        File accompagnements = new File(System.getProperty("user.dir") + "/bdd/produits/accompagnements");
+        accompagnements.mkdirs();
+        File plats = new File(System.getProperty("user.dir") + "/bdd/produits/plats");
+        plats.mkdirs();
+        File boissons = new File(System.getProperty("user.dir") + "/bdd/produits/boissons");
+        boissons.mkdirs();
         Boisson b = new Boisson("RedBull", 2);
         b.sauvegarder_boisson();
         Boisson b1 = new Boisson( "Coca-Cola", 1.50);
