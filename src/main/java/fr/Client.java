@@ -61,7 +61,11 @@ public class Client implements Serializable {
         return this.numero_client;
     }
 
-    public String getHistorique_commandes() {
+    public List<Commande> getHistorique_commandes() {
+        return historique_commandes;
+    }
+
+    public String getHistorique_commandes_to_String() {
         if (!this.historique_commandes.isEmpty()) {
             // this.historique_commandes.add(new Commande(this));
             StringBuilder stringBuilder = new StringBuilder();

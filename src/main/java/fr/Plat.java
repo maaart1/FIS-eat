@@ -90,4 +90,6 @@ public class Plat implements Serializable {
     public double getPrix() {
         return prix;
     }
+
+
 }

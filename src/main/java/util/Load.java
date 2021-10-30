@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Load {
 
     public static void charger_fichiers() {
-        File client = new File(System.getProperty("user.dir") + "/bdd/client/");
+        File client = new File(System.getProperty("user.dir") + "/bdd/clients/");
         client.mkdirs();
         File ingredients = new File(System.getProperty("user.dir") + "/bdd/ingredients/");
         ingredients.mkdirs();
@@ -34,13 +34,13 @@ public class Load {
         b6.sauvegarder_boisson();
         Boisson b7 = new Boisson( "Orangina", 1.50);
         b7.sauvegarder_boisson();
-        Boisson b8 = new Boisson( "Eau", 1);
+        Boisson b8 = new Boisson( "Eau Pétillante", 1);
         b8.sauvegarder_boisson();
         Boisson b9 = new Boisson( "Eau Plate", 1);
         b9.sauvegarder_boisson();
-        Accompagnement a = new Accompagnement ( "Frites", 2.50);
+        Accompagnement a = new Accompagnement ( "Frites", 2.50, 5);
         a.sauvegarder_accompagnement();
-        Accompagnement a1 = new Accompagnement("Potatoes", 2.50);
+        Accompagnement a1 = new Accompagnement("Potatoes", 2.50, 5);
         a1.sauvegarder_accompagnement();
         Ingredient i1 = new Ingredient("Pain à burger", false,"", 0 );
         i1.sauvegarder_ingredient();

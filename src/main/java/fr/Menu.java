@@ -69,4 +69,16 @@ public class Menu implements Serializable {
     public double getPrix() {
         return prix;
     }
+
+    public Boisson getBoisson() {
+        return boisson;
+    }
+
+    public Plat getPlat() {
+        return plat;
+    }
+
+    public Accompagnement getAccompagnement() {
+        return accompagnement;
+    }
 }

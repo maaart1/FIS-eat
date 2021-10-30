@@ -1,5 +1,7 @@
 package util;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Scanner;
 
 import fr.*;
@@ -91,6 +93,7 @@ public class MenuLayouts {
                 }
             }
         }
+        if (choix.equals("")) return Integer.parseInt("10");
         return Integer.parseInt(choix);
     }
 
@@ -106,19 +109,25 @@ public class MenuLayouts {
             case 1 -> passer_commande(client, commande);
             case 2 -> historique_commandes(client, commande);
             case 3 -> deconnecter();
+            default -> {
+                System.out.println("\t --------------------------------------------------------");
+                System.out.println("Erreur de saisie !");
+                System.out.println("Appuyer sur entrée pour continuer ! ");
+                this.sc.nextLine();
+                this.menu(client, commande);
+            }
         }
     }
 
     public void deconnecter() {
         System.out.println("Merci de votre visite ;)");
+        this.logo();
         this.page_accueil();
     }
 
-    // TODO Afficher l'historique des commandes => il faut avoir finit la validation de la commande pour le faire
     public void historique_commandes(Client client, Commande commande) {
         System.out.println("Historique de vos commandes : ");
-        System.out.print(client.getHistorique_commandes());
-        this.sc.nextLine();
+        System.out.print(client.getHistorique_commandes_to_String());
         this.menu(client, commande);
     }
 
@@ -211,7 +220,10 @@ public class MenuLayouts {
                 System.out.println(commande.afficher_commande_en_cours());
                 this.fin_commande(client, commande, "non");
             }
-            case 4 -> this.menu(client, commande);
+            case 4 -> {
+                commande = new Commande(client);
+                this.menu(client, commande);
+            }
             default -> {
                 System.out.println("Erreur de saisie !");
                 System.out.println("Appuyer sur entrée pour continuer ! ");
@@ -222,7 +234,6 @@ public class MenuLayouts {
 
     }
 
-    // TODO Changer la route de la réponse lorsque le client dit "oui" (faire une validation de commande)
     public void fin_commande(Client client, Commande commande, String type) {
         if (!type.equals("non")) System.out.println("\t " + type  + " ajouté :)");
         System.out.print("\t Fin de la commande ? (oui/non) ");
@@ -241,7 +252,27 @@ public class MenuLayouts {
         System.out.println("\t --------------------------------------------------------");
         System.out.println("Récapitulatif de la commande :");
         System.out.println(commande.afficher_commande_en_cours());
-        System.out.println("\t Valider et payer ? (oui/non)");
+        System.out.print("\t Valider et payer ? (oui/non) ");
+        String valider_et_payer = this.sc.nextLine();
+        switch (valider_et_payer) {
+            case "oui" -> {
+                System.out.println("\t Sauvegarde de la commande...");
+                client.getHistorique_commandes().add(commande);
+                client.sauvegarder_client();
+                System.out.println("\t Votre commande a été envoyée à la cuisine !");
+                System.out.println("\t Temps de préparation estimé à " + commande.get_duree_commande() + " secondes");
+                System.out.println("Appuyer sur entrée pour continuer ! ");
+                this.sc.nextLine();
+                this.menu(client, commande);
+            }
+            case "non" -> {
+                System.out.println("Abandon de la commande...");
+                this.menu(client, commande);
+            }
+            default -> {
+                this.validation_commande(client, commande);
+            }
+        }
     }
 
     public int choix_plat_hors_menu() {

@@ -10,10 +10,12 @@ public class Accompagnement implements Serializable {
     private String nom;
     private int numero_accompagnement;
     private double prix;
+    private int temps_preparation;
 
-    public Accompagnement(String nom, double prix) {
+    public Accompagnement(String nom, double prix, int temps_preparation) {
         this.nom = nom;
         this.prix = prix;
+        this.temps_preparation = temps_preparation;
         this.numero_accompagnement = Accompagnement.get_nombres_accompagnements();
     }
 
@@ -56,5 +58,9 @@ public class Accompagnement implements Serializable {
 
     public double getPrix() {
         return prix;
+    }
+
+    public int getTemps_preparation() {
+        return temps_preparation;
     }
 }

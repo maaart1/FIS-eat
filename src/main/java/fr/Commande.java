@@ -1,11 +1,16 @@
 package fr;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Commande {
+public class Commande implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -3804444274228500039L;
+
     private int numero_commande;
     private Client client;
     private LocalDate date;
@@ -25,6 +30,7 @@ public class Commande {
         this.boissons = new ArrayList<>();
         this.accompagnements = new ArrayList<>();
         this.menus = new ArrayList<>();
+        this.numero_commande = this.client.getHistorique_commandes().size();
     }
 
     public int getNumero_commande() {
@@ -86,10 +92,9 @@ public class Commande {
                 .append(" : \n")
                 .append("\t Date : ")
                 .append(date)
-                .append("\n\t Prix : ")
-                .append(prix);
-
-        stringBuilder.append(this.afficher_commande_list());
+                .append(" : \n");
+        stringBuilder.append(this.afficher_commande_list())
+                .append("\n");
         return stringBuilder.toString();
     }
 
@@ -136,12 +141,14 @@ public class Commande {
         for (Accompagnement accompagnement: this.accompagnements) {
             sb.append(accompagnement.getNom()).append(", ");
         }
-        sb.append("\n\t --------------------------------------------------------")
+        sb.append("\n")
                 .append("\n\t Prix de la commande : ")
                 .append(this.get_commande_prix())
                 .append(" €");
+        sb.append("\n\t --------------------------------------------------------");
         return sb.toString();
     }
+
 
     public double get_commande_prix() {
         double prix_tmp = 0;
@@ -162,5 +169,26 @@ public class Commande {
         }
         this.setPrix(prix_tmp);
         return this.prix;
+    }
+
+    public int get_duree_commande() {
+        int temps = 0;
+        for (Menu menu: this.menus) {
+            temps += menu.getAccompagnement().getTemps_preparation();
+            for (Ingredient ingredient: menu.getPlat().getIngredients()) {
+                temps += ingredient.getTemps_preparation();
+            }
+        }
+
+        for (Plat plat: this.plats) {
+            for (Ingredient ingredient: plat.getIngredients() ) {
+                temps += ingredient.getTemps_preparation();
+            }
+        }
+
+        for (Accompagnement accompagnement: this.accompagnements) {
+            temps += accompagnement.getTemps_preparation();
+        }
+        return temps;
     }
 }
