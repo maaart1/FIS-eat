@@ -92,7 +92,7 @@ public class Commande implements Serializable {
                 .append(" : \n")
                 .append("\t Date : ")
                 .append(date)
-                .append(" : \n");
+                .append("\n");
         stringBuilder.append(this.afficher_commande_list())
                 .append("\n");
         return stringBuilder.toString();

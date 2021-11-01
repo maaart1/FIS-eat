@@ -128,6 +128,7 @@ public class MenuLayouts {
     public void historique_commandes(Client client, Commande commande) {
         System.out.println("Historique de vos commandes : ");
         System.out.print(client.getHistorique_commandes_to_String());
+        this.sc.nextLine();
         this.menu(client, commande);
     }
 
@@ -337,9 +338,14 @@ public class MenuLayouts {
         int nombres_plats = Plat.get_nombres_plats();
         for (int i = 1; i <= nombres_plats - 1; i++) {
             Plat p;
-            if (hors_menu) p = Plat.get_plat_by_id_hors_menu(i);
-            else p = Plat.get_plat_by_id(i);
-            if (p != null) System.out.println("\t" + p);
+            if (hors_menu) {
+                p = Plat.get_plat_by_id_hors_menu(i);
+                if (p != null) System.out.println("\t" + p.toString(true));
+            }
+            else {
+                p = Plat.get_plat_by_id(i);
+                if (p != null) System.out.println("\t" + p.toString(false));
+            }
         }
     }
 

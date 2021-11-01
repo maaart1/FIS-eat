@@ -76,16 +76,26 @@ public class Plat implements Serializable {
         return hors_menu;
     }
 
-    @Override
-    public String toString() {
+    public String toString(boolean with_prix) {
         StringBuilder stringBuilder =  new StringBuilder();
-        stringBuilder.append(this.numero_plat + " : " + this.nom + " (" + this.prix + " €) : ");
+        stringBuilder.append(this.numero_plat)
+                .append(" : ")
+                .append(this.nom);
+        if (with_prix) {
+            stringBuilder
+                    .append(" (")
+                    .append(this.prix)
+                    .append(" €)");
+        }
+        stringBuilder.append(" : ");
         for (Ingredient ingredient : this.ingredients) {
-            stringBuilder.append(ingredient + ", ");
+            stringBuilder.append(ingredient)
+                    .append(", ");
         }
         stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
         return stringBuilder.toString();
     }
+
 
     public double getPrix() {
         return prix;
