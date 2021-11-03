@@ -189,11 +189,16 @@ public class MenuLayouts {
                             System.out.print("Choix ? ");
                             plat = verification_choix(this.sc.nextLine());
                         }
-                        commande.ajouter_plat(Plat.get_plat_by_id(plat));
+
+                        commande.ajouter_menu(new Menu("Menu choix libre",
+                                Boisson.get_boisson_by_id(this.choix_boisson()),
+                                Plat.get_plat_by_id(plat),
+                                Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()), 8.00));
+                        /*commande.ajouter_plat(Plat.get_plat_by_id(plat));
 
                         commande.ajouter_boisson(Boisson.get_boisson_by_id(this.choix_boisson()));
 
-                        commande.ajouter_accompagnement(Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()));
+                        commande.ajouter_accompagnement(Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()));*/
 
                         this.fin_commande(client, commande, "Menu");
                     }
@@ -245,6 +250,7 @@ public class MenuLayouts {
         }
     }
 
+    // TODO Ajouté le menu à 8€
     public void fin_commande(Client client, Commande commande, String type) {
         if (!type.equals("non")) System.out.println("\t " + type  + " ajouté :)");
         System.out.print("\t Fin de la commande ? (oui/non) ");
