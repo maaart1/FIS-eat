@@ -268,6 +268,7 @@ public class MenuLayouts {
             }
             case "non" -> {
                 System.out.println("Abandon de la commande...");
+                commande = new Commande(client);
                 this.menu(client, commande);
             }
             default -> {
