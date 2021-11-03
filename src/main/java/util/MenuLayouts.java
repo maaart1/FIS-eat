@@ -1,18 +1,23 @@
 package util;
 
-import java.io.Serial;
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import fr.*;
+import thread.Cuisine;
 
 public class MenuLayouts {
     public Scanner sc = new Scanner(System.in);
+    public ExecutorService executor = Executors.newFixedThreadPool(2);
 
-    private List<Commande> en_attente;
-    private List<Commande> en_preparation;
-    private List<Commande> prete;
+    private List<Commande> en_attente = new ArrayList<>();
+    private List<Commande> prete = new ArrayList<>();
+
+    Cuisine cuisine = new Cuisine(executor);
+
 
     public void logo() {
         System.out.println(" .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------. \n" +
@@ -29,6 +34,7 @@ public class MenuLayouts {
     }
 
     public int choix_accueil() {
+        cuisine.start(this.en_attente, this.prete);
         System.out.println("\t 1 - Inscription");
         System.out.println("\t 2 - Connexion");
         System.out.println("\t 3 - Connexion en invité");
@@ -257,7 +263,7 @@ public class MenuLayouts {
         System.out.println("\t --------------------------------------------------------");
         System.out.println("Récapitulatif de la commande :");
         System.out.println(commande.afficher_commande_en_cours());
-        System.out.print("\t Valider et payer ? (oui/non) ");
+        System.out.print("Valider et payer ? (oui/non) ");
         String valider_et_payer = this.sc.nextLine();
         switch (valider_et_payer) {
             case "oui" -> {

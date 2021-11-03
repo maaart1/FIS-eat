@@ -19,9 +19,6 @@ public class Commande implements Serializable {
     private List<Plat> plats;
     private List<Accompagnement> accompagnements;
     private List<Boisson> boissons;
-    private boolean en_attente;
-    private boolean en_preparation;
-    private boolean prete;
 
     public Commande(Client client) {
         this.client = client;
@@ -59,30 +56,6 @@ public class Commande implements Serializable {
 
     public void setPrix(double prix) {
         this.prix = prix;
-    }
-
-    public boolean isEn_attente() {
-        return en_attente;
-    }
-
-    public void setEn_attente(boolean en_attente) {
-        this.en_attente = en_attente;
-    }
-
-    public boolean isEn_preparation() {
-        return en_preparation;
-    }
-
-    public void setEn_preparation(boolean en_preparation) {
-        this.en_preparation = en_preparation;
-    }
-
-    public boolean isPrete() {
-        return prete;
-    }
-
-    public void setPrete(boolean prete) {
-        this.prete = prete;
     }
 
     @Override
