@@ -11,12 +11,10 @@ import thread.Cuisine;
 
 public class MenuLayouts {
     public Scanner sc = new Scanner(System.in);
-    public ExecutorService executor = Executors.newFixedThreadPool(2);
 
-    private List<Commande> en_attente = new ArrayList<>();
-    private List<Commande> prete = new ArrayList<>();
+    public List<Commande> en_attente = new ArrayList<>();
 
-    Cuisine cuisine = new Cuisine(executor);
+    public Cuisine cuisine = new Cuisine(en_attente, 2);
 
 
     public void logo() {
@@ -34,7 +32,7 @@ public class MenuLayouts {
     }
 
     public int choix_accueil() {
-        cuisine.start(this.en_attente, this.prete);
+        cuisine.start();
         System.out.println("\t 1 - Inscription");
         System.out.println("\t 2 - Connexion");
         System.out.println("\t 3 - Connexion en invité");
@@ -138,7 +136,7 @@ public class MenuLayouts {
     }
 
     public void historique_commandes(Client client, Commande commande) {
-        System.out.println("Historique de vos commandes : ");
+        System.out.println("Historique de vos commandes : \n");
         System.out.print(client.getHistorique_commandes_to_String());
         this.menu(client, commande);
     }
@@ -155,10 +153,13 @@ public class MenuLayouts {
         int choix = verification_choix(this.sc.nextLine());
         switch (choix) {
             case 1 -> {
+                Plat burger_classique = Plat.get_plat_by_id(1);
+                Plat salade_veggie = Plat.get_plat_by_id(7);
+                Plat grande_faim = Plat.get_plat_by_id(4);
                 System.out.println("\t --------------------------------------------------------");
-                System.out.println("\t 1 - Le classique (7.00 €)");
-                System.out.println("\t 2 - Le veggie (9.00 €)");
-                System.out.println("\t 3 - La grande faim (12.00 €)");
+                System.out.println("\t 1 - " + burger_classique.getNom() + " (7.00 €) : " + burger_classique.getIngredients_toString());
+                System.out.println("\t 2 - " + salade_veggie.getNom() + " (9.00 €) : " + salade_veggie.getIngredients_toString());
+                System.out.println("\t 3 - " + grande_faim.getNom() + " (12.00 €) : " + grande_faim.getIngredients_toString());
                 System.out.println("\t 4 - Commander un menu en choix libre (8.00 €)");
                 System.out.println("\t 5 - Annuler");
                 System.out.print("Choix ? ");
@@ -215,7 +216,7 @@ public class MenuLayouts {
                 System.out.println("\t --------------------------------------------------------");
                 System.out.println("\t 1 - Un plat");
                 System.out.println("\t 2 - Une boisson");
-                System.out.println("\t 3 - Un accomagnement");
+                System.out.println("\t 3 - Un accompagnement");
                 System.out.print("Choix ? ");
                 int next_next_choix = verification_choix(this.sc.nextLine());
                 switch (next_next_choix) {
@@ -277,13 +278,17 @@ public class MenuLayouts {
                 client.getHistorique_commandes().add(commande);
                 client.sauvegarder_client();
                 System.out.println("\t Votre commande a été envoyée à la cuisine !");
+                this.en_attente.add(commande);
+                cuisine.setEn_attente(this.en_attente);
                 System.out.println("\t Temps de préparation estimé à " + commande.get_duree_commande() + " secondes");
                 System.out.println("Appuyer sur entrée pour continuer ! ");
                 this.sc.nextLine();
+                commande = new Commande(client);
                 this.menu(client, commande);
             }
             case "non" -> {
                 System.out.println("Abandon de la commande...");
+                commande = new Commande(client);
                 this.menu(client, commande);
             }
             default -> {

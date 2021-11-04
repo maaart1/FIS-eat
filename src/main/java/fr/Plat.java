@@ -72,6 +72,15 @@ public class Plat implements Serializable {
         return ingredients;
     }
 
+    public String getIngredients_toString() {
+        StringBuilder stringBuilder =  new StringBuilder();
+        for (Ingredient ingredient : this.ingredients) {
+            stringBuilder.append(ingredient + ", ");
+        }
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
+        return stringBuilder.toString();
+    }
+
     public boolean isHors_menu() {
         return hors_menu;
     }

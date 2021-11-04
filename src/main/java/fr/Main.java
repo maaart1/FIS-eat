@@ -14,7 +14,6 @@ public class Main {
         menu.logo();
         menu.page_accueil();
         menu.sc.close();
-        menu.executor.shutdown();
 
 
     }
