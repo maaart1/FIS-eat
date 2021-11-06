@@ -3,8 +3,6 @@ package util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import fr.*;
 import thread.Cuisine;
@@ -32,6 +30,8 @@ public class MenuLayouts {
     }
 
     public int choix_accueil() {
+        MenuLayouts.clear_screen();
+        this.logo();
         cuisine.start();
         System.out.println("\t 1 - Inscription");
         System.out.println("\t 2 - Connexion");
@@ -60,7 +60,6 @@ public class MenuLayouts {
     }
 
     public void incription() {
-        MenuLayouts.clear_screen();
         System.out.print("Nom : ");
         String nom_client = this.sc.nextLine();
 
@@ -73,7 +72,6 @@ public class MenuLayouts {
     }
 
     public void connexion() {
-        MenuLayouts.clear_screen();
         System.out.print("Numéro client : ");
         int numero_client = verification_choix(this.sc.nextLine());
         if (!Client.exist(numero_client)) {
@@ -108,7 +106,8 @@ public class MenuLayouts {
     }
 
     public void menu(Client client, Commande commande) {
-        System.out.println("\t --------------------------------------------------------");
+        // System.out.println("\t --------------------------------------------------------");
+        MenuLayouts.clear_screen();
         System.out.println("Bonjour " + client.get_nom() + " :)");
         System.out.println("\t 1 - Passer une commande");
         System.out.println("\t 2 - Historique des commandes");
@@ -136,15 +135,16 @@ public class MenuLayouts {
     }
 
     public void historique_commandes(Client client, Commande commande) {
+        MenuLayouts.clear_screen();
         System.out.println("Historique de vos commandes : \n");
         System.out.print(client.getHistorique_commandes_to_String());
         this.menu(client, commande);
     }
 
     public void passer_commande(Client client, Commande commande) {
-        System.out.println("\t --------------------------------------------------------");
+        //System.out.println("\t --------------------------------------------------------");
+        MenuLayouts.clear_screen();
         System.out.println("Passer commande : ");
-        // Choix menu ou hors menu
         System.out.println("\t 1 - Commander un menu");
         System.out.println("\t 2 - Commander en hors menu");
         System.out.println("\t 3 - Afficher la commande en cours");
@@ -196,9 +196,7 @@ public class MenuLayouts {
                                 Plat.get_plat_by_id(plat),
                                 Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()), 8.00));
                         /*commande.ajouter_plat(Plat.get_plat_by_id(plat));
-
                         commande.ajouter_boisson(Boisson.get_boisson_by_id(this.choix_boisson()));
-
                         commande.ajouter_accompagnement(Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()));*/
 
                         this.fin_commande(client, commande, "Menu");
@@ -235,6 +233,7 @@ public class MenuLayouts {
                 }
             }
             case 3 -> {
+                MenuLayouts.clear_screen();
                 System.out.println(commande.afficher_commande_en_cours());
                 this.fin_commande(client, commande, "non");
             }
@@ -267,7 +266,8 @@ public class MenuLayouts {
     }
 
     public void validation_commande(Client client, Commande commande) {
-        System.out.println("\t --------------------------------------------------------");
+        //System.out.println("\t --------------------------------------------------------");
+        MenuLayouts.clear_screen();
         System.out.println("Récapitulatif de la commande :");
         System.out.println(commande.afficher_commande_en_cours());
         System.out.print("Valider et payer ? (oui/non) ");

@@ -1,8 +1,10 @@
 package thread;
 
 import fr.Commande;
+import util.MenuLayouts;
 
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -24,9 +26,9 @@ public class Cuisine {
                 if (!en_attente.isEmpty()) {
                     Commande commande = en_attente.get(0);
                     Thread.sleep(commande.get_duree_commande() * 1000L);
+                    MenuLayouts.clear_screen();
                     System.out.println("La commande numéro " + commande.getNumero_commande() + " de " + commande.getClient().get_nom() + " est prête :)");
                     this.en_attente.remove(commande);
-                    Thread.sleep(2000);
                 }
             } catch (InterruptedException e) { e.printStackTrace(); }
         };
