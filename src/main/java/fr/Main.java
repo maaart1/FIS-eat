@@ -13,6 +13,7 @@ public class Main {
         // System.out.println("\u001B[1m I am bold");
         menu.page_accueil();
         menu.sc.close();
+        menu.cuisine.shutdown_executor();
 
 
     }

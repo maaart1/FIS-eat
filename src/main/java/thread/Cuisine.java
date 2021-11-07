@@ -33,7 +33,7 @@ public class Cuisine {
             } catch (InterruptedException e) { e.printStackTrace(); }
         };
 
-        this.executor.scheduleAtFixedRate(myRunnable, 0, 5, TimeUnit.SECONDS);
+        this.executor.scheduleAtFixedRate(myRunnable, 1, 5, TimeUnit.SECONDS);
     }
 
     public void setEn_attente(List<Commande> en_attente) {
