@@ -12,7 +12,7 @@ public class MenuLayouts {
 
     public List<Commande> en_attente = new ArrayList<>();
 
-    public Cuisine cuisine = new Cuisine(en_attente, 2);
+    public Cuisine cuisine = new Cuisine(2, this);
 
 
     public void logo() {
@@ -32,7 +32,7 @@ public class MenuLayouts {
     public int choix_accueil() {
         MenuLayouts.clear_screen();
         this.logo();
-        cuisine.start();
+        // cuisine.start();
         System.out.println("\t 1 - Inscription");
         System.out.println("\t 2 - Connexion");
         System.out.println("\t 3 - Connexion en invité");
@@ -108,6 +108,7 @@ public class MenuLayouts {
     public void menu(Client client, Commande commande) {
         // System.out.println("\t --------------------------------------------------------");
         MenuLayouts.clear_screen();
+        System.out.println("taille " + this.en_attente.size());
         System.out.println("Bonjour " + client.get_nom() + " :)");
         System.out.println("\t 1 - Passer une commande");
         System.out.println("\t 2 - Historique des commandes");
@@ -138,6 +139,7 @@ public class MenuLayouts {
         MenuLayouts.clear_screen();
         System.out.println("Historique de vos commandes : \n");
         System.out.print(client.getHistorique_commandes_to_String());
+        this.sc.nextLine();
         this.menu(client, commande);
     }
 
@@ -277,10 +279,10 @@ public class MenuLayouts {
                 System.out.println("\t Sauvegarde de la commande...");
                 client.getHistorique_commandes().add(commande);
                 client.sauvegarder_client();
-                System.out.println("\t Votre commande a été envoyée à la cuisine !");
+                System.out.println("\t Votre commande numéro " + commande.getNumero_commande() + " a été envoyée à la cuisine !");
                 this.en_attente.add(commande);
-                cuisine.setEn_attente(this.en_attente);
                 System.out.println("\t Temps de préparation estimé à " + commande.get_duree_commande() + " secondes");
+                cuisine.start();
                 System.out.println("Appuyer sur entrée pour continuer ! ");
                 this.sc.nextLine();
                 commande = new Commande(client);
