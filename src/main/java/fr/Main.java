@@ -11,9 +11,9 @@ public class Main {
         //Load.charger_fichiers();
         MenuLayouts menu = new MenuLayouts();
         // System.out.println("\u001B[1m I am bold");
-        menu.logo();
         menu.page_accueil();
         menu.sc.close();
+        menu.cuisine.shutdown_executor();
 
 
     }

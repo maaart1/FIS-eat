@@ -1,13 +1,20 @@
 package util;
 
-import java.io.Serial;
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import fr.*;
+import thread.Cuisine;
 
 public class MenuLayouts {
     public Scanner sc = new Scanner(System.in);
+
+    public List<Commande> en_attente = new ArrayList<>();
+
+    public Cuisine cuisine = new Cuisine(2, this);
+
+
     public void logo() {
         System.out.println(" .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------. \n" +
                 "| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |\n" +
@@ -23,6 +30,9 @@ public class MenuLayouts {
     }
 
     public int choix_accueil() {
+        MenuLayouts.clear_screen();
+        this.logo();
+        // cuisine.start();
         System.out.println("\t 1 - Inscription");
         System.out.println("\t 2 - Connexion");
         System.out.println("\t 3 - Connexion en invité");
@@ -50,7 +60,6 @@ public class MenuLayouts {
     }
 
     public void incription() {
-        MenuLayouts.clear_screen();
         System.out.print("Nom : ");
         String nom_client = this.sc.nextLine();
 
@@ -63,7 +72,6 @@ public class MenuLayouts {
     }
 
     public void connexion() {
-        MenuLayouts.clear_screen();
         System.out.print("Numéro client : ");
         int numero_client = verification_choix(this.sc.nextLine());
         if (!Client.exist(numero_client)) {
@@ -98,7 +106,9 @@ public class MenuLayouts {
     }
 
     public void menu(Client client, Commande commande) {
-        System.out.println("\t --------------------------------------------------------");
+        // System.out.println("\t --------------------------------------------------------");
+        MenuLayouts.clear_screen();
+        System.out.println("taille " + this.en_attente.size());
         System.out.println("Bonjour " + client.get_nom() + " :)");
         System.out.println("\t 1 - Passer une commande");
         System.out.println("\t 2 - Historique des commandes");
@@ -126,16 +136,17 @@ public class MenuLayouts {
     }
 
     public void historique_commandes(Client client, Commande commande) {
-        System.out.println("Historique de vos commandes : ");
+        MenuLayouts.clear_screen();
+        System.out.println("Historique de vos commandes : \n");
         System.out.print(client.getHistorique_commandes_to_String());
         this.sc.nextLine();
         this.menu(client, commande);
     }
 
     public void passer_commande(Client client, Commande commande) {
-        System.out.println("\t --------------------------------------------------------");
+        //System.out.println("\t --------------------------------------------------------");
+        MenuLayouts.clear_screen();
         System.out.println("Passer commande : ");
-        // Choix menu ou hors menu
         System.out.println("\t 1 - Commander un menu");
         System.out.println("\t 2 - Commander en hors menu");
         System.out.println("\t 3 - Afficher la commande en cours");
@@ -144,10 +155,13 @@ public class MenuLayouts {
         int choix = verification_choix(this.sc.nextLine());
         switch (choix) {
             case 1 -> {
+                Plat burger_classique = Plat.get_plat_by_id(1);
+                Plat salade_veggie = Plat.get_plat_by_id(7);
+                Plat grande_faim = Plat.get_plat_by_id(4);
                 System.out.println("\t --------------------------------------------------------");
-                System.out.println("\t 1 - Le classique (7.00 €)");
-                System.out.println("\t 2 - Le veggie (9.00 €)");
-                System.out.println("\t 3 - La grande faim (12.00 €)");
+                System.out.println("\t 1 - " + burger_classique.getNom() + " (7.00 €) : " + burger_classique.getIngredients_toString());
+                System.out.println("\t 2 - " + salade_veggie.getNom() + " (9.00 €) : " + salade_veggie.getIngredients_toString());
+                System.out.println("\t 3 - " + grande_faim.getNom() + " (12.00 €) : " + grande_faim.getIngredients_toString());
                 System.out.println("\t 4 - Commander un menu en choix libre (8.00 €)");
                 System.out.println("\t 5 - Annuler");
                 System.out.print("Choix ? ");
@@ -178,11 +192,14 @@ public class MenuLayouts {
                             System.out.print("Choix ? ");
                             plat = verification_choix(this.sc.nextLine());
                         }
-                        commande.ajouter_plat(Plat.get_plat_by_id(plat));
 
+                        commande.ajouter_menu(new Menu("Menu choix libre",
+                                Boisson.get_boisson_by_id(this.choix_boisson()),
+                                Plat.get_plat_by_id(plat),
+                                Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()), 8.00));
+                        /*commande.ajouter_plat(Plat.get_plat_by_id(plat));
                         commande.ajouter_boisson(Boisson.get_boisson_by_id(this.choix_boisson()));
-
-                        commande.ajouter_accompagnement(Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()));
+                        commande.ajouter_accompagnement(Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()));*/
 
                         this.fin_commande(client, commande, "Menu");
                     }
@@ -199,7 +216,7 @@ public class MenuLayouts {
                 System.out.println("\t --------------------------------------------------------");
                 System.out.println("\t 1 - Un plat");
                 System.out.println("\t 2 - Une boisson");
-                System.out.println("\t 3 - Un accomagnement");
+                System.out.println("\t 3 - Un accompagnement");
                 System.out.print("Choix ? ");
                 int next_next_choix = verification_choix(this.sc.nextLine());
                 switch (next_next_choix) {
@@ -218,6 +235,7 @@ public class MenuLayouts {
                 }
             }
             case 3 -> {
+                MenuLayouts.clear_screen();
                 System.out.println(commande.afficher_commande_en_cours());
                 this.fin_commande(client, commande, "non");
             }
@@ -232,9 +250,9 @@ public class MenuLayouts {
                 this.passer_commande(client, commande);
             }
         }
-
     }
 
+    // TODO Ajouté le menu à 8€
     public void fin_commande(Client client, Commande commande, String type) {
         if (!type.equals("non")) System.out.println("\t " + type  + " ajouté :)");
         System.out.print("\t Fin de la commande ? (oui/non) ");
@@ -250,20 +268,24 @@ public class MenuLayouts {
     }
 
     public void validation_commande(Client client, Commande commande) {
-        System.out.println("\t --------------------------------------------------------");
+        //System.out.println("\t --------------------------------------------------------");
+        MenuLayouts.clear_screen();
         System.out.println("Récapitulatif de la commande :");
         System.out.println(commande.afficher_commande_en_cours());
-        System.out.print("\t Valider et payer ? (oui/non) ");
+        System.out.print("Valider et payer ? (oui/non) ");
         String valider_et_payer = this.sc.nextLine();
         switch (valider_et_payer) {
             case "oui" -> {
                 System.out.println("\t Sauvegarde de la commande...");
                 client.getHistorique_commandes().add(commande);
                 client.sauvegarder_client();
-                System.out.println("\t Votre commande a été envoyée à la cuisine !");
+                System.out.println("\t Votre commande numéro " + commande.getNumero_commande() + " a été envoyée à la cuisine !");
+                this.en_attente.add(commande);
                 System.out.println("\t Temps de préparation estimé à " + commande.get_duree_commande() + " secondes");
+                cuisine.start();
                 System.out.println("Appuyer sur entrée pour continuer ! ");
                 this.sc.nextLine();
+                commande = new Commande(client);
                 this.menu(client, commande);
             }
             case "non" -> {
