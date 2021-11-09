@@ -3,20 +3,21 @@ package fr;
 import java.io.*;
 import java.util.List;
 
-public class Accompagnement implements Serializable {
+public class Accompagnement extends Produit implements Serializable {
     @Serial
     private static final long serialVersionUID = 7072625591871715646L;
 
-    private String nom;
+    // private String nom;
     private int numero_accompagnement;
     private double prix;
     private int temps_preparation;
 
     public Accompagnement(String nom, double prix, int temps_preparation) {
-        this.nom = nom;
+        super(nom);
+        //this.nom = nom;
         this.prix = prix;
         this.temps_preparation = temps_preparation;
-        this.numero_accompagnement = Accompagnement.get_nombres_accompagnements();
+        this.numero_accompagnement = Produit.get_nombres_produits(System.getProperty("user.dir") + "/bdd/produits/accompagnements/");
     }
 
     public void sauvegarder_accompagnement() {
@@ -29,7 +30,7 @@ public class Accompagnement implements Serializable {
         }
     }
 
-    public static Accompagnement get_accompagnement_by_id(int numero_accompagnement) {
+    /*public static Accompagnement get_accompagnement_by_id(int numero_accompagnement) {
         File file = new File(System.getProperty("user.dir") + "/bdd/produits/accompagnements/" + numero_accompagnement + ".ser");
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -39,21 +40,21 @@ public class Accompagnement implements Serializable {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 
-    public static int get_nombres_accompagnements() {
-        File directory = new File(System.getProperty("user.dir") + "/bdd/produits/accompagnements/");
-        File[] content_files = directory.listFiles();
-        return content_files.length == 0 ? 1 : content_files.length + 1;
-    }
+//    public static int get_nombres_accompagnements() {
+//        File directory = new File(System.getProperty("user.dir") + "/bdd/produits/accompagnements/");
+//        File[] content_files = directory.listFiles();
+//        return content_files.length == 0 ? 1 : content_files.length + 1;
+//    }
 
     public String getNom() {
-        return nom;
+        return super.getNom();
     }
 
     @Override
     public String toString() {
-        return this.numero_accompagnement + " : " + this.nom + " (" + this.prix + " €) ";
+        return this.numero_accompagnement + " : " + super.getNom() + " (" + this.prix + " €) ";
     }
 
     public double getPrix() {

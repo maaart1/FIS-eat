@@ -1,5 +1,6 @@
 package util;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -106,9 +107,7 @@ public class MenuLayouts {
     }
 
     public void menu(Client client, Commande commande) {
-        // System.out.println("\t --------------------------------------------------------");
         MenuLayouts.clear_screen();
-        System.out.println("taille " + this.en_attente.size());
         System.out.println("Bonjour " + client.get_nom() + " :)");
         System.out.println("\t 1 - Passer une commande");
         System.out.println("\t 2 - Historique des commandes");
@@ -131,7 +130,6 @@ public class MenuLayouts {
 
     public void deconnecter() {
         System.out.println("Merci de votre visite ;)");
-        this.logo();
         this.page_accueil();
     }
 
@@ -155,9 +153,9 @@ public class MenuLayouts {
         int choix = verification_choix(this.sc.nextLine());
         switch (choix) {
             case 1 -> {
-                Plat burger_classique = Plat.get_plat_by_id(1);
-                Plat salade_veggie = Plat.get_plat_by_id(7);
-                Plat grande_faim = Plat.get_plat_by_id(4);
+                Plat burger_classique = FileManager.get_plat_by_id(1);
+                Plat salade_veggie = FileManager.get_plat_by_id(7);
+                Plat grande_faim = FileManager.get_plat_by_id(4);
                 System.out.println("\t --------------------------------------------------------");
                 System.out.println("\t 1 - " + burger_classique.getNom() + " (7.00 €) : " + burger_classique.getIngredients_toString());
                 System.out.println("\t 2 - " + salade_veggie.getNom() + " (9.00 €) : " + salade_veggie.getIngredients_toString());
@@ -194,9 +192,9 @@ public class MenuLayouts {
                         }
 
                         commande.ajouter_menu(new Menu("Menu choix libre",
-                                Boisson.get_boisson_by_id(this.choix_boisson()),
-                                Plat.get_plat_by_id(plat),
-                                Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()), 8.00));
+                                FileManager.get_boisson_by_id(this.choix_boisson()),
+                                FileManager.get_plat_by_id(plat),
+                                FileManager.get_accompagnement_by_id(this.choix_accompagnements()), 8.00));
                         /*commande.ajouter_plat(Plat.get_plat_by_id(plat));
                         commande.ajouter_boisson(Boisson.get_boisson_by_id(this.choix_boisson()));
                         commande.ajouter_accompagnement(Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()));*/
@@ -221,15 +219,15 @@ public class MenuLayouts {
                 int next_next_choix = verification_choix(this.sc.nextLine());
                 switch (next_next_choix) {
                     case 1 -> {
-                        commande.ajouter_plat(Plat.get_plat_by_id(this.choix_plat_hors_menu()));
+                        commande.ajouter_plat(FileManager.get_plat_by_id(this.choix_plat_hors_menu()));
                         this.fin_commande(client, commande, "Produit");
                     }
                     case 2 -> {
-                        commande.ajouter_boisson(Boisson.get_boisson_by_id(this.choix_boisson()));
+                        commande.ajouter_boisson(FileManager.get_boisson_by_id(this.choix_boisson()));
                         this.fin_commande(client, commande,"Produit");
                     }
                     case 3 -> {
-                        commande.ajouter_accompagnement(Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()));
+                        commande.ajouter_accompagnement(FileManager.get_accompagnement_by_id(this.choix_accompagnements()));
                         this.fin_commande(client, commande, "Produit");
                     }
                 }
@@ -252,7 +250,6 @@ public class MenuLayouts {
         }
     }
 
-    // TODO Ajouté le menu à 8€
     public void fin_commande(Client client, Commande commande, String type) {
         if (!type.equals("non")) System.out.println("\t " + type  + " ajouté :)");
         System.out.print("\t Fin de la commande ? (oui/non) ");
@@ -349,24 +346,24 @@ public class MenuLayouts {
 
     public void afficher_boissons() {
         System.out.println("Choisir une boisson :");
-        int nombres_boissons = Boisson.get_nombres_boissons();
+        int nombres_boissons = Produit.get_nombres_produits(System.getProperty("user.dir") + "/bdd/produits/boissons/");
         for (int i = 1; i <= nombres_boissons - 1; i++) {
-            Boisson b = Boisson.get_boisson_by_id(i);
+            Boisson b = FileManager.get_boisson_by_id(i);
             System.out.println("\t" + b);
         }
     }
 
     public void afficher_plats(boolean hors_menu) {
         System.out.println("Choisir un plat :");
-        int nombres_plats = Plat.get_nombres_plats();
+        int nombres_plats = Produit.get_nombres_produits(System.getProperty("user.dir") + "/bdd/produits/plats/");
         for (int i = 1; i <= nombres_plats - 1; i++) {
             Plat p;
             if (hors_menu) {
-                p = Plat.get_plat_by_id_hors_menu(i);
+                p = FileManager.get_plat_by_id_hors_menu(i);
                 if (p != null) System.out.println("\t" + p.toString(true));
             }
             else {
-                p = Plat.get_plat_by_id(i);
+                p = FileManager.get_plat_by_id(i);
                 if (p != null) System.out.println("\t" + p.toString(false));
             }
         }
@@ -374,9 +371,9 @@ public class MenuLayouts {
 
     public void afficher_accompagnements() {
         System.out.println("Choisir un accomgnement :");
-        int nombres_accompagnements = Accompagnement.get_nombres_accompagnements();
+        int nombres_accompagnements = Produit.get_nombres_produits(System.getProperty("user.dir") + "/bdd/produits/accompagnements/");
         for (int i = 1; i <= nombres_accompagnements - 1; i++) {
-            Accompagnement a = Accompagnement.get_accompagnement_by_id(i);
+            Accompagnement a = FileManager.get_accompagnement_by_id(i);
             System.out.println("\t" + a);
         }
     }

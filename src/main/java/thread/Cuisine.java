@@ -4,38 +4,40 @@ import fr.Client;
 import fr.Commande;
 import util.MenuLayouts;
 
-import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.IntStream;
 
 public class Cuisine {
 
     public MenuLayouts menuLayouts;
     public ScheduledExecutorService executor;
 
+    public Cuisine(int nb_threads, MenuLayouts menuLayouts) {
+        this.menuLayouts = menuLayouts;
+        executor = Executors.newScheduledThreadPool(nb_threads);
+    }
+
     public Runnable myRunnable = () -> {
         try {
             if (!menuLayouts.en_attente.isEmpty()) {
                 Commande commande = menuLayouts.en_attente.get(0);
-                Thread.sleep(commande.get_duree_commande() * 1000L);
+                Thread.sleep((commande.get_duree_commande() * 1000L) / 2);
+                System.out.println("\n\t --------------------------------------------------------");
+                System.out.println("\t La commande numéro " + commande.getNumero_commande() + " de " + commande.getClient().get_nom() + " est à 50% de sa préparation:)");
+                System.out.println("\t --------------------------------------------------------");
+                Thread.sleep((commande.get_duree_commande() * 1000L) / 2);
+
                 MenuLayouts.clear_screen();
                 System.out.println("La commande numéro " + commande.getNumero_commande() + " de " + commande.getClient().get_nom() + " est prête :)");
-                System.out.println("Retour dans 5 secondes...");
+                System.out.println("Retour dans 3 secondes...");
                 menuLayouts.en_attente.remove(commande);
-                Thread.sleep(5000);
+                Thread.sleep(3000);
                 Client client = commande.getClient();
                 menuLayouts.menu(client, new Commande(client));
             }
         } catch (InterruptedException e) { e.printStackTrace(); }
     };
 
-    public Cuisine(int nb_threads, MenuLayouts menuLayouts) {
-        this.menuLayouts = menuLayouts;
-        executor = Executors.newScheduledThreadPool(nb_threads);
-    }
 
     public void start() {
         this.executor.execute(myRunnable);
