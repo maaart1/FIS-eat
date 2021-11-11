@@ -4,3 +4,4 @@ bdd/menus/*.ser
 bdd/produits/Accompagnements/*.ser
 bdd/produits/Plats/*.ser
 bdd/produits/Boissons/*.ser
+target
