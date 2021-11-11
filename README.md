@@ -2,11 +2,17 @@
 
 FIS'eat is an command terminal. It's possible to order menus and products without menus. 
 
+## Careful
+
+In the git repository, there is no folder with files of data.  
+It's necessary to do the [Prerequisites section](#prerequisites).
+
 ## Prerequisites
 
 *1. If it's the first launch of the application :*
 
 In Main file, uncomment the line `Load.charger_fichiers();` : 
+Only for the first run. After, comment this line.
 
 ```java
 public class Main {
