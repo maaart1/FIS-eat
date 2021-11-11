@@ -36,17 +36,17 @@ public class Menu implements Serializable {
         }
     }
 
-    public static Menu get_menu_by_id(int numero_menu) {
-        File file = new File(System.getProperty("user.dir") + "/bdd/menus/" + numero_menu + ".ser");
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInput objectInput = new ObjectInputStream(fileInputStream);
-            return (Menu) objectInput.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    public static Menu get_menu_by_id(int numero_menu) {
+//        File file = new File(System.getProperty("user.dir") + "/bdd/menus/" + numero_menu + ".ser");
+//        try {
+//            FileInputStream fileInputStream = new FileInputStream(file);
+//            ObjectInput objectInput = new ObjectInputStream(fileInputStream);
+//            return (Menu) objectInput.readObject();
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     public static int get_nombres_menus() {
         File directory = new File(System.getProperty("user.dir") + "/bdd/menus/");

@@ -2,6 +2,7 @@ package util;
 
 import fr.Accompagnement;
 import fr.Boisson;
+import fr.Menu;
 import fr.Plat;
 
 import java.io.*;
@@ -59,6 +60,19 @@ public class FileManager {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInput objectInput = new ObjectInputStream(fileInputStream);
             return (Accompagnement) objectInput.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // MENUS
+    public static Menu get_menu_by_id(int numero_menu) {
+        File file = new File(System.getProperty("user.dir") + "/bdd/menus/" + numero_menu + ".ser");
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInput objectInput = new ObjectInputStream(fileInputStream);
+            return (Menu) objectInput.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

@@ -32,14 +32,12 @@ public class Cuisine {
                 System.out.println("\t --------------------------------------------------------");
                 Thread.sleep((commande.get_duree_commande() * 1000L) / 2);
 
-                MenuLayouts.clear_screen();
-                System.out.println("La commande numéro " + commande.getNumero_commande() + " de " + commande.getClient().get_nom() + " est prête :)");
-                System.out.println("Retour dans 3 secondes...");
-                //menuLayouts.en_attente.remove(commande);
-                Thread.sleep(3000);
+                //MenuLayouts.clear_screen();
+                System.out.println("\n\t --------------------------------------------------------");
+                System.out.println("\t La commande numéro " + commande.getNumero_commande() + " de " + commande.getClient().get_nom() + " est prête :)");
+                System.out.println("\t --------------------------------------------------------");
                 Client client = commande.getClient();
-                // menuLayouts.menu(client, new Commande(client));
-                menuLayouts.page_accueil();
+                //menuLayouts.page_accueil();
             }
         } catch (InterruptedException e) { e.printStackTrace(); }
     };

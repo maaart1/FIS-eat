@@ -148,28 +148,28 @@ public class MenuLayouts {
         int choix = verification_choix(this.sc.nextLine());
         switch (choix) {
             case 1 -> {
-                Plat burger_classique = FileManager.get_plat_by_id(1);
-                Plat salade_veggie = FileManager.get_plat_by_id(7);
-                Plat grande_faim = FileManager.get_plat_by_id(4);
+                Menu menu_1 = FileManager.get_menu_by_id(1);
+                Menu menu_2 = FileManager.get_menu_by_id(2);
+                Menu menu_3 = FileManager.get_menu_by_id(3);
                 System.out.println("\t --------------------------------------------------------");
-                System.out.println("\t 1 - " + burger_classique.getNom() + " (7.00 €) : " + burger_classique.getIngredients_toString());
-                System.out.println("\t 2 - " + salade_veggie.getNom() + " (9.00 €) : " + salade_veggie.getIngredients_toString());
-                System.out.println("\t 3 - " + grande_faim.getNom() + " (12.00 €) : " + grande_faim.getIngredients_toString());
+                System.out.println("\t 1 - " + menu_1.getNom() + " (7.00 €)");
+                System.out.println("\t 2 - " + menu_2.getNom() + " (9.00 €)");
+                System.out.println("\t 3 - " + menu_3.getNom() + " (12.00 €)");
                 System.out.println("\t 4 - Commander un menu en choix libre (8.00 €)");
                 System.out.println("\t 5 - Annuler");
                 System.out.print("Choix ? ");
                 int next_choix = verification_choix(this.sc.nextLine());
                 switch (next_choix) {
                     case 1 -> {
-                        commande.ajouter_menu(Menu.get_menu_by_id(1));
+                        commande.ajouter_menu(FileManager.get_menu_by_id(1));
                         this.fin_commande(client, commande, "Menu");
                     }
                     case 2 -> {
-                        commande.ajouter_menu(Menu.get_menu_by_id(2));
+                        commande.ajouter_menu(FileManager.get_menu_by_id(2));
                         this.fin_commande(client, commande, "Menu");
                     }
                     case 3 -> {
-                        commande.ajouter_menu(Menu.get_menu_by_id(3));
+                        commande.ajouter_menu(FileManager.get_menu_by_id(3));
                         this.fin_commande(client, commande, "Menu");
                     }
                     case 4 -> {
@@ -269,10 +269,9 @@ public class MenuLayouts {
                 System.out.println("\t Votre commande numéro " + commande.getNumero_commande() + " a été envoyée à la cuisine !");
                 this.en_attente.add(commande);
                 System.out.println("\t Temps de préparation estimé à " + commande.get_duree_commande() + " secondes");
-                cuisine.start();
                 System.out.println("Appuyer sur entrée pour continuer ! ");
+                cuisine.start();
                 this.sc.nextLine();
-                commande = new Commande(client);
                 this.page_accueil();
             }
             case "non" -> {
