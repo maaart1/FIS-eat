@@ -1,11 +1,11 @@
 package fr;
 
-import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
-abstract public class Produit implements Serializable {
+/**
+ * Classe Produit : Classe mère qui implements Serializable.
+ */
+public class Produit implements Serializable {
     @Serial
     private static final long serialVersionUID = -7331025968631394285L;
 

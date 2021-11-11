@@ -3,18 +3,20 @@ package fr;
 import java.io.*;
 import java.util.List;
 
+/**
+ * Classe Accompagnement : La classe Accompagnement hérite de Produit et impléments Serializable.
+ * Elle définit un accompagnement.
+ */
 public class Accompagnement extends Produit implements Serializable {
     @Serial
     private static final long serialVersionUID = 7072625591871715646L;
 
-    // private String nom;
     private int numero_accompagnement;
     private double prix;
     private int temps_preparation;
 
     public Accompagnement(String nom, double prix, int temps_preparation) {
         super(nom);
-        //this.nom = nom;
         this.prix = prix;
         this.temps_preparation = temps_preparation;
         this.numero_accompagnement = Produit.get_nombres_produits(System.getProperty("user.dir") + "/bdd/produits/accompagnements/");
@@ -29,24 +31,6 @@ public class Accompagnement extends Produit implements Serializable {
             e.printStackTrace();
         }
     }
-
-    /*public static Accompagnement get_accompagnement_by_id(int numero_accompagnement) {
-        File file = new File(System.getProperty("user.dir") + "/bdd/produits/accompagnements/" + numero_accompagnement + ".ser");
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInput objectInput = new ObjectInputStream(fileInputStream);
-            return (Accompagnement) objectInput.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }*/
-
-//    public static int get_nombres_accompagnements() {
-//        File directory = new File(System.getProperty("user.dir") + "/bdd/produits/accompagnements/");
-//        File[] content_files = directory.listFiles();
-//        return content_files.length == 0 ? 1 : content_files.length + 1;
-//    }
 
     public String getNom() {
         return super.getNom();

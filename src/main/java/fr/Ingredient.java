@@ -2,6 +2,10 @@ package fr;
 
 import java.io.*;
 
+/**
+ * Classe Ingredient : La classe Ingredient implements Serializable.
+ * Elle définit un ingrédient.
+ */
 public class Ingredient implements Serializable {
     @Serial
     private static final long serialVersionUID = 6695211179522399290L;
@@ -31,7 +35,7 @@ public class Ingredient implements Serializable {
     }
 
 
-    public static Ingredient get_ingredient_by_id(int numero_ingredient)  {
+    /* static Ingredient get_ingredient_by_id(int numero_ingredient)  {
         File file = new File(System.getProperty("user.dir") + "/bdd/ingredients/" + numero_ingredient + ".ser");
         System.out.println(file.getPath());
         try {
@@ -42,28 +46,12 @@ public class Ingredient implements Serializable {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 
     public int get_nombres_ingredients() {
         File directory = new File(System.getProperty("user.dir") + "/bdd/ingredients/");
         File[] content_files = directory.listFiles();
         return content_files.length == 0 ? 1 : content_files.length + 1;
-    }
-
-    public int getNumero_ingredient() {
-        return numero_ingredient;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public boolean isCuit() {
-        return cuit;
-    }
-
-    public String getType_cuisson() {
-        return type_cuisson;
     }
 
     public int getTemps_preparation() {

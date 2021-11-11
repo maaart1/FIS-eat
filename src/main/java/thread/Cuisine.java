@@ -7,6 +7,10 @@ import util.MenuLayouts;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+
+/**
+ * Classe Cuisine : La classe Cuisine prépare les commandes validées par les clients.
+ */
 public class Cuisine {
 
     public MenuLayouts menuLayouts;
@@ -43,7 +47,6 @@ public class Cuisine {
 
     public void start() {
         this.executor.execute(myRunnable);
-        //this.executor.scheduleWithFixedDelay(myRunnable, 0, 5000, TimeUnit.MILLISECONDS);
     }
 
     public void shutdown_executor() {

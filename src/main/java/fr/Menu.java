@@ -2,6 +2,10 @@ package fr;
 
 import java.io.*;
 
+/**
+ * Classe Menu : La classe Menu implements Serializable.
+ * Elle définit un menu.
+ */
 public class Menu implements Serializable {
     @Serial
     private static final long serialVersionUID = -2757956060455371466L;

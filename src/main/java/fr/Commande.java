@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Classe Commande : La classe Commande implements Serializable.
+ * ELle définit une commande.
+ */
 public class Commande implements Serializable {
     @Serial
     private static final long serialVersionUID = -3804444274228500039L;
@@ -34,24 +38,8 @@ public class Commande implements Serializable {
         return numero_commande;
     }
 
-    public void setNumero_commande(int numero_commande) {
-        this.numero_commande = numero_commande;
-    }
-
     public Client getClient() {
         return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public void setPrix(double prix) {

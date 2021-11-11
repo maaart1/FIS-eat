@@ -4,6 +4,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe Client : La classe Client implements Serializable.
+ * Elle définit un client.
+ */
 public class Client implements Serializable {
     @Serial
     private static final long serialVersionUID = -3822866514056828473L;
@@ -42,7 +46,6 @@ public class Client implements Serializable {
 
     public static boolean exist(int numero_client) {
         File file = new File(System.getProperty("user.dir") + "/bdd/clients/" + numero_client + ".ser");
-        //return file.exists() ? true : false;
         if (file.exists()) return true;
         else return false;
     }
@@ -67,7 +70,6 @@ public class Client implements Serializable {
 
     public String getHistorique_commandes_to_String() {
         if (!this.historique_commandes.isEmpty()) {
-            // this.historique_commandes.add(new Commande(this));
             StringBuilder stringBuilder = new StringBuilder();
             for (Commande commande : this.historique_commandes) {
                 stringBuilder.append(commande).append(", ");

@@ -1,6 +1,5 @@
 package util;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -8,6 +7,9 @@ import java.util.Scanner;
 import fr.*;
 import thread.Cuisine;
 
+/**
+ * Classe MenuLayouts : Cette classe est la classe principale du l'application.
+ */
 public class MenuLayouts {
     public Scanner sc = new Scanner(System.in);
 
@@ -17,18 +19,12 @@ public class MenuLayouts {
 
 
     public void logo() {
-        System.out.println("███████╗██╗███████╗  ██   ███████╗ █████╗ ████████╗\n" +
-                           "██╔════╝██║██╔════╝  █    ██╔════╝██╔══██╗╚══██╔══╝\n" +
-                           "█████╗  ██║███████╗       █████╗  ███████║   ██║   \n" +
-                           "██╔══╝  ██║╚════██║       ██╔══╝  ██╔══██║   ██║   \n" +
-                           "██║     ██║███████║       ███████╗██║  ██║   ██║   \n" +
-                           "╚═╝     ╚═╝╚══════╝       ╚══════╝╚═╝  ╚═╝   ╚═╝   \n");
+
     }
 
     public int choix_accueil() {
         MenuLayouts.clear_screen();
         this.logo();
-        // cuisine.start();
         System.out.println("\t 1 - Inscription");
         System.out.println("\t 2 - Connexion");
         System.out.println("\t 3 - Connexion en invité");
@@ -137,7 +133,6 @@ public class MenuLayouts {
     }
 
     public void passer_commande(Client client, Commande commande) {
-        //System.out.println("\t --------------------------------------------------------");
         MenuLayouts.clear_screen();
         System.out.println("Passer commande : ");
         System.out.println("\t 1 - Commander un menu");
@@ -190,10 +185,6 @@ public class MenuLayouts {
                                 FileManager.get_boisson_by_id(this.choix_boisson()),
                                 FileManager.get_plat_by_id(plat),
                                 FileManager.get_accompagnement_by_id(this.choix_accompagnements()), 8.00));
-                        /*commande.ajouter_plat(Plat.get_plat_by_id(plat));
-                        commande.ajouter_boisson(Boisson.get_boisson_by_id(this.choix_boisson()));
-                        commande.ajouter_accompagnement(Accompagnement.get_accompagnement_by_id(this.choix_accompagnements()));*/
-
                         this.fin_commande(client, commande, "Menu");
                     }
                     case 5 -> this.menu(client, commande);
@@ -260,7 +251,6 @@ public class MenuLayouts {
     }
 
     public void validation_commande(Client client, Commande commande) {
-        //System.out.println("\t --------------------------------------------------------");
         MenuLayouts.clear_screen();
         System.out.println("Récapitulatif de la commande :");
         System.out.println(commande.afficher_commande_en_cours());
@@ -278,7 +268,6 @@ public class MenuLayouts {
                 System.out.println("Appuyer sur entrée pour continuer ! ");
                 this.sc.nextLine();
                 commande = new Commande(client);
-                //this.menu(client, commande);
                 this.page_accueil();
             }
             case "non" -> {

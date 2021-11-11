@@ -3,11 +3,14 @@ package fr;
 import java.io.*;
 import java.util.List;
 
+/**
+ * Classe Plat : La classe Plat hérite de Produit et impléments Serializable.
+ * Elle définit un plat.
+ */
 public class Plat extends Produit implements Serializable {
     @Serial
     private static final long serialVersionUID = -2203171846142637339L;
 
-    //private String nom;
     private List<Ingredient> ingredients;
     private int numero_plat;
     private boolean hors_menu;
@@ -15,7 +18,6 @@ public class Plat extends Produit implements Serializable {
 
     public Plat(String nom, List<Ingredient> ingredients, boolean hors_menu, double prix) {
         super(nom);
-        //this.nom = nom;
         this.ingredients = ingredients;
         this.numero_plat = Produit.get_nombres_produits(System.getProperty("user.dir") + "/bdd/produits/plats/");
         this.hors_menu = hors_menu;
@@ -31,39 +33,6 @@ public class Plat extends Produit implements Serializable {
             e.printStackTrace();
         }
     }
-
-    /*public static Plat get_plat_by_id(int numero_produit) {
-        File file = new File(System.getProperty("user.dir") + "/bdd/produits/plats/" + numero_produit + ".ser");
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInput objectInput = new ObjectInputStream(fileInputStream);
-            return (Plat) objectInput.readObject();
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static Plat get_plat_by_id_hors_menu(int numero_produit) {
-        File file = new File(System.getProperty("user.dir") + "/bdd/produits/plats/" + numero_produit + ".ser");
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInput objectInput = new ObjectInputStream(fileInputStream);
-            Plat plat = (Plat) objectInput.readObject();
-            if (plat.isHors_menu())  {
-                return plat;
-            }
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }*/
-
-//    public static int get_nombres_plats() {
-//        File directory = new File(System.getProperty("user.dir") + "/bdd/produits/plats/");
-//        File[] content_files = directory.listFiles();
-//        return content_files.length == 0 ? 1 : content_files.length + 1;
-//    }
 
     public List<Ingredient> getIngredients() {
         return ingredients;

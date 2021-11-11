@@ -5,6 +5,9 @@ import fr.*;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * Classe Load : La classe permet de loader au premier démarrage de l'application les fichiers bdd.
+ */
 public class Load {
 
     public static void charger_fichiers() {

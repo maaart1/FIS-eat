@@ -6,6 +6,9 @@ import fr.Plat;
 
 import java.io.*;
 
+/**
+ * Classe FileManager : Cette classe permet de gérer les appels aux fichiers binaires.
+ */
 public class FileManager {
 
     // PLATS
