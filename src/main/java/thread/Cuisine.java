@@ -36,8 +36,6 @@ public class Cuisine {
                 System.out.println("\n\t --------------------------------------------------------");
                 System.out.println("\t La commande numéro " + commande.getNumero_commande() + " de " + commande.getClient().get_nom() + " est prête :)");
                 System.out.println("\t --------------------------------------------------------");
-                Client client = commande.getClient();
-                //menuLayouts.page_accueil();
             }
         } catch (InterruptedException e) { e.printStackTrace(); }
     };
