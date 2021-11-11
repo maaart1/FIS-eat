@@ -21,6 +21,7 @@ public class Cuisine {
         try {
             if (!menuLayouts.en_attente.isEmpty()) {
                 Commande commande = menuLayouts.en_attente.get(0);
+                menuLayouts.en_attente.remove(commande);
                 Thread.sleep((commande.get_duree_commande() * 1000L) / 2);
                 System.out.println("\n\t --------------------------------------------------------");
                 System.out.println("\t La commande numéro " + commande.getNumero_commande() + " de " + commande.getClient().get_nom() + " est à 50% de sa préparation:)");
@@ -30,7 +31,7 @@ public class Cuisine {
                 MenuLayouts.clear_screen();
                 System.out.println("La commande numéro " + commande.getNumero_commande() + " de " + commande.getClient().get_nom() + " est prête :)");
                 System.out.println("Retour dans 3 secondes...");
-                menuLayouts.en_attente.remove(commande);
+                //menuLayouts.en_attente.remove(commande);
                 Thread.sleep(3000);
                 Client client = commande.getClient();
                 // menuLayouts.menu(client, new Commande(client));
