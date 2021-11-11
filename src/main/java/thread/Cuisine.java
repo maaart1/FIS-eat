@@ -33,7 +33,8 @@ public class Cuisine {
                 menuLayouts.en_attente.remove(commande);
                 Thread.sleep(3000);
                 Client client = commande.getClient();
-                menuLayouts.menu(client, new Commande(client));
+                // menuLayouts.menu(client, new Commande(client));
+                menuLayouts.page_accueil();
             }
         } catch (InterruptedException e) { e.printStackTrace(); }
     };

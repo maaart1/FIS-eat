@@ -283,7 +283,8 @@ public class MenuLayouts {
                 System.out.println("Appuyer sur entrée pour continuer ! ");
                 this.sc.nextLine();
                 commande = new Commande(client);
-                this.menu(client, commande);
+                //this.menu(client, commande);
+                this.page_accueil();
             }
             case "non" -> {
                 System.out.println("Abandon de la commande...");
